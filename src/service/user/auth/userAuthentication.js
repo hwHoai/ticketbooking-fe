@@ -1,3 +1,1 @@
-export class UserAuthenticationService {
-
-}
+export class UserAuthenticationService {}

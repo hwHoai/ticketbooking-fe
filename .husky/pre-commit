@@ -1,2 +1,2 @@
-prettier --write --ignore-unknown
+yarn prettier
 git add

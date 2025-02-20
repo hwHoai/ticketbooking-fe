@@ -1,5 +1,5 @@
-import { ROUTE_PATH } from "../constant/routePath";
-import { NewFeedPage } from "../screen/new_feed/NewFeedPage";
+import { ROUTE_PATH } from '../constant/routePath';
+import { NewFeedPage } from '../screen/new_feed/NewFeedPage';
 
 export const publicRoute = [
   {

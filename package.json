@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prettier": "prettier . --write"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.0.6",

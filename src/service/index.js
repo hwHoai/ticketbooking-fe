@@ -1,1 +1,1 @@
-export * from './user/auth/userAuthentication'
+export * from './user/auth/userAuthentication';

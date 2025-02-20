@@ -19,10 +19,10 @@
   background: #555;
 }
 @layer base {
-    ::-webkit-scrollbar-track {
-        background: #ffffff;
-    }
-    ::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+  ::-webkit-scrollbar-thumb {
     background: #3f3f3f;
     border-radius: 800px;
   }

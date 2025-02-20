@@ -1,4 +1,4 @@
-import { ROUTE_PATH } from "../constant/routePath";
+import { ROUTE_PATH } from '../constant/routePath';
 
 export const privateRoute = [
   {
