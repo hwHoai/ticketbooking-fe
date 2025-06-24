@@ -26,7 +26,13 @@ export const logger = {
   log(level, message, context = 'General', ...args) {
     if (LOG_LEVELS[level].priority <= LOG_LEVELS[currentLevel].priority) {
       const timestamp = dayjs().format('DD-MM-YYYY HH:mm:ss');
-      console.log(`%c${level.toUpperCase()}%c ${timestamp} - [${context}]`, LOG_LEVELS[level].style, '', message, ...args);
+      console.log(
+        `%c${level.toUpperCase()}%c ${timestamp} - [${context}]`,
+        LOG_LEVELS[level].style,
+        '',
+        message,
+        ...args
+      );
     }
   },
 

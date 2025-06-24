@@ -35,7 +35,7 @@ export const useRequest = async (option, data = null) => {
     return transformResponseLog(response);
   } catch (error) {
     if (import.meta.env.VITE_ENVIRONMENT === 'dev') {
-      logger.error(transformResponseLog(error.response || error) , 'Request Error');
+      logger.error(transformResponseLog(error.response || error), 'Request Error');
     }
 
     // Handle error response

@@ -33,7 +33,11 @@ axios.interceptors.request.use(
             const accessTokenPayload = TokenService.decodeToken(res.data.accessToken);
             const refreshTokenPayload = TokenService.decodeToken(res.data.refreshToken);
             await CookieService.setCookie('accessToken', res.data.accessToken, new Date(accessTokenPayload.exp * 1000));
-            await CookieService.setCookie('refreshToken', res.data.refreshToken, new Date(refreshTokenPayload.exp * 1000));
+            await CookieService.setCookie(
+              'refreshToken',
+              res.data.refreshToken,
+              new Date(refreshTokenPayload.exp * 1000)
+            );
             config.headers['Authorization'] = `Bearer ${res.data.accessToken}`;
             return config;
           })
