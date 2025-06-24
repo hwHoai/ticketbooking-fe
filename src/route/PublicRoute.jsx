@@ -6,6 +6,12 @@ export const publicRoute = [
     id: 'newfeed',
     path: ROUTE_PATH.NEW_FEED,
     element: <NewFeedPage />,
+    index: false
+  },
+  {
+    id: 'home',
+    path: ROUTE_PATH.HOME,
+    element: <NewFeedPage />,
     index: true
   }
 ];

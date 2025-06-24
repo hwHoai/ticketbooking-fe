@@ -1,348 +1,74 @@
 @import 'tailwindcss';
-@import 'tailwindcss/theme.css' layer(theme);
-@import 'tailwindcss/preflight.css' layer(base);
-@layer theme, base, components, utilities;
-::-webkit-scrollbar {
-  width: 8px;
-}
 
-::-webkit-scrollbar-track {
-  background: #ffffff;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #3f3f3f;
-  border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
 @layer base {
-  ::-webkit-scrollbar-track {
-    background: #ffffff;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #3f3f3f;
-    border-radius: 800px;
+  html {
+    font-family:
+      'lato',
+      'Inter',
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      sans-serif;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
+  
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-
-    --radius: 0.5rem;
+    /* Softer versions of black and white */
+    --color-white: #f8f8f8;
+    --color-black: #222222;
   }
-
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+  
+  body {
+    color: var(--color-black);
+    background-color: var(--color-white);
   }
 }
 
-@font-face {
-  font-family: 'OpenSans Condensed';
-  src: url('../assets/fonts/OpenSans_Condensed-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
+@theme {
+/* Primary colors - Blue */
+--color-primary-100: #e3f0ff;
+--color-primary-200: #badeff;
+--color-primary-300: #7ab6ff;
+--color-primary-400: #4a90e2;
+
+/* Secondary colors - Slate */
+--color-secondary-100: #f1f5f9;
+--color-secondary-200: #e2e8f0;
+--color-secondary-300: #94a3b8;
+--color-secondary-400: #64748b;
+
+/* Accent colors - Purple */
+--color-accent-100: #f3e8ff;
+--color-accent-200: #e5cfff;
+--color-accent-300: #c084fc;
+--color-accent-400: #9333ea;
+
+/* Success colors - Green */
+--color-success-100: #dcfce7;
+--color-success-200: #bbf7d0;
+--color-success-300: #4ade80;
+--color-success-400: #16a34a;
+
+/* Warning colors - Amber */
+--color-warning-100: #fef3c7;
+--color-warning-200: #fde68a;
+--color-warning-300: #fbbf24;
+--color-warning-400: #d97706;
+
+/* Danger colors - Red */
+--color-danger-100: #fee2e2;
+--color-danger-200: #fecaca;
+--color-danger-300: #f87171;
+--color-danger-400: #dc2626;
+
+/* Info colors - Sky */
+--color-info-100: #e0f2fe;
+--color-info-200: #bae6fd;
+--color-info-300: #38bdf8;
+--color-info-400: #0284c7;
 }
 
-@font-face {
-  font-family: 'OpenSans Condensed';
-  src: url('../assets/fonts/OpenSans_Condensed-BoldItalic.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans Condensed';
-  src: url('../assets/fonts/OpenSans_Condensed-ExtraBold.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans Condensed';
-  src: url('../assets/fonts/OpenSans_Condensed-ExtraBoldItalic.ttf') format('truetype');
-  font-weight: 800;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans Condensed';
-  src: url('../assets/fonts/OpenSans_Condensed-Italic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans Condensed';
-  src: url('../assets/fonts/OpenSans_Condensed-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans Condensed';
-  src: url('../assets/fonts/OpenSans_Condensed-LightItalic.ttf') format('truetype');
-  font-weight: 300;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans Condensed';
-  src: url('../assets/fonts/OpenSans_Condensed-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans Condensed';
-  src: url('../assets/fonts/OpenSans_Condensed-MediumItalic.ttf') format('truetype');
-  font-weight: 500;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans Condensed';
-  src: url('../assets/fonts/OpenSans_Condensed-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans Condensed';
-  src: url('../assets/fonts/OpenSans_Condensed-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans Condensed';
-  src: url('../assets/fonts/OpenSans_Condensed-SemiBoldItalic.ttf') format('truetype');
-  font-weight: 600;
-  font-style: italic;
-}
-
-/* OpenSans Semi Condensed */
-@font-face {
-  font-family: 'OpenSans Semi Condensed';
-  src: url('../assets/fonts/OpenSans_SemiCondensed-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans Semi Condensed';
-  src: url('../assets/fonts/OpenSans_SemiCondensed-BoldItalic.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans Semi Condensed';
-  src: url('../assets/fonts/OpenSans_SemiCondensed-ExtraBold.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans Semi Condensed';
-  src: url('../assets/fonts/OpenSans_SemiCondensed-ExtraBoldItalic.ttf') format('truetype');
-  font-weight: 800;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans Semi Condensed';
-  src: url('../assets/fonts/OpenSans_SemiCondensed-Italic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans Semi Condensed';
-  src: url('../assets/fonts/OpenSans_SemiCondensed-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans Semi Condensed';
-  src: url('../assets/fonts/OpenSans_SemiCondensed-LightItalic.ttf') format('truetype');
-  font-weight: 300;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans Semi Condensed';
-  src: url('../assets/fonts/OpenSans_SemiCondensed-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans Semi Condensed';
-  src: url('../assets/fonts/OpenSans_SemiCondensed-MediumItalic.ttf') format('truetype');
-  font-weight: 500;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans Semi Condensed';
-  src: url('../assets/fonts/OpenSans_SemiCondensed-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans Semi Condensed';
-  src: url('../assets/fonts/OpenSans_SemiCondensed-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans Semi Condensed';
-  src: url('../assets/fonts/OpenSans_SemiCondensed-SemiBoldItalic.ttf') format('truetype');
-  font-weight: 600;
-  font-style: italic;
-}
-
-/* OpenSans Regular */
-@font-face {
-  font-family: 'OpenSans';
-  src: url('../assets/fonts/OpenSans-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('../assets/fonts/OpenSans-BoldItalic.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('../assets/fonts/OpenSans-ExtraBold.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('../assets/fonts/OpenSans-ExtraBoldItalic.ttf') format('truetype');
-  font-weight: 800;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('../assets/fonts/OpenSans-Italic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('../assets/fonts/OpenSans-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('../assets/fonts/OpenSans-LightItalic.ttf') format('truetype');
-  font-weight: 300;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('../assets/fonts/OpenSans-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('../assets/fonts/OpenSans-MediumItalic.ttf') format('truetype');
-  font-weight: 500;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('../assets/fonts/OpenSans-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('../assets/fonts/OpenSans-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenSans';
-  src: url('../assets/fonts/OpenSans-SemiBoldItalic.ttf') format('truetype');
-  font-weight: 600;
-  font-style: italic;
-}
