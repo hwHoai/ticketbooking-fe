@@ -23,7 +23,7 @@ const currentLevel = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'debug' : 'inf
 // Create logger object
 export const logger = {
   // Generic log method
-  log(level, message, context = 'General', ...args) {
+  log(message, level = 'debug', context = 'General', ...args) {
     if (LOG_LEVELS[level].priority <= LOG_LEVELS[currentLevel].priority) {
       const timestamp = dayjs().format('DD-MM-YYYY HH:mm:ss');
       console.log(
@@ -38,23 +38,23 @@ export const logger = {
 
   // Convenience methods for each log level
   error(message, context = 'General', ...args) {
-    this.log('error', message, context, ...args);
+    this.log(message, 'error', context, ...args);
   },
 
   warn(message, context = 'General', ...args) {
-    this.log('warn', message, context, ...args);
+    this.log(message, 'warn', context, ...args);
   },
 
   info(message, context = 'General', ...args) {
-    this.log('info', message, context, ...args);
+    this.log(message, 'info', context, ...args);
   },
 
   debug(message, context = 'General', ...args) {
-    this.log('debug', message, context, ...args);
+    this.log(message, 'debug', context, ...args);
   },
 
   trace(message, context = 'General', ...args) {
-    this.log('trace', message, context, ...args);
+    this.log(message, 'trace', context, ...args);
   }
 };
 
