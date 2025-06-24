@@ -43,6 +43,7 @@ axios.interceptors.request.use(
           })
           .catch((error) => {
             // Handle token renewal error
+            logger.error('Token renewal failed:', error);
           });
         return config;
       })();

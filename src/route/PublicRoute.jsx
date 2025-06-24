@@ -1,17 +1,17 @@
 import { ROUTE_PATH } from '../constant/routePath';
-import { NewFeedPage } from '../screen/new_feed/NewFeedPage';
+import { HomePage } from '../screen/home/HomePage';
 
 export const publicRoute = [
   {
     id: 'newfeed',
     path: ROUTE_PATH.NEW_FEED,
-    element: <NewFeedPage />,
+    element: <HomePage />,
     index: false
   },
   {
     id: 'home',
     path: ROUTE_PATH.HOME,
-    element: <NewFeedPage />,
+    element: <HomePage />,
     index: true
   }
 ];
