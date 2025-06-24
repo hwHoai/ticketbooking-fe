@@ -1,5 +1,5 @@
 import { axiosInstance } from '../config/axios.config';
-import { logger } from '../util/logger';
+import { logger } from './logger';
 
 const transformResponseLog = (response) => {
   return {
@@ -12,7 +12,7 @@ const transformResponseLog = (response) => {
   };
 };
 
-export const useRequest = async (option, data = null) => {
+export const request = async (option, data = null) => {
   const { method, url, header } = option;
 
   try {

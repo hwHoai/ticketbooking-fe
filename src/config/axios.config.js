@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { CookieService } from '../service/common/cookie.service';
 import { TokenService } from '../service/common/token.service';
-import { UserAuthenticationService } from '../service/user/auth/user.authentication.service';
+import { UserAuthenticationService } from '../service/user/auth/authentication.service';
 import { logger } from '../util/logger';
 
 const axiosConfig = {

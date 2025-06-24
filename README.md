@@ -16,10 +16,11 @@ A comprehensive, production-ready React starter template with modern tooling and
 
 #### 🌐 HTTP Client & API Management
 
-- **Axios** - HTTP client with interceptors
+- **Axios** - HTTP client with interceptors for services and error handling
+- **Service Architecture** - Organized API calls in service classes
 - **Token Management** - Automatic token refresh and validation
 - **Cookie Service** - Browser cookie management utilities
-- **Request Hook** - Custom hook for API calls with logging
+- **Request Utility** - Utility function for enhanced API calls
 
 #### 🌍 Internationalization (i18n)
 
@@ -72,8 +73,6 @@ src/
 ├── constant/                 # Application constants
 │   ├── error.code.js        # Error code definitions
 │   └── routePath.jsx        # Route path constants
-├── hooks/                   # Custom React hooks
-│   └── useRequest.js        # HTTP request hook
 ├── route/                   # Routing configuration
 │   ├── PrivateRoute.jsx    # Protected routes (Need authentication)
 │   └── PublicRoute.jsx     # Public routes
@@ -93,7 +92,8 @@ src/
 │           ├── user.login.service.js           # Login service
 │           └── user.register.service.js        # Register service
 ├── util/                   # Utility functions
-│   └── logger.js          # Browser logging utility
+│   ├── logger.js          # Browser logging utility
+│   └── request.js         # HTTP request utility
 ├── App.jsx                # Main application component
 ├── index.css              # Global styles and Tailwind imports
 └── main.jsx               # Application entry point
@@ -146,18 +146,99 @@ src/
 
 ### HTTP Requests
 
-Use the custom `useRequest` hook for API calls:
+Use service classes for API calls. Create service classes that utilize the `request` utility function:
 
 ```javascript
-import { useRequest } from './hooks/useRequest';
+// Example: service/user/auth/user.login.service.js
+import { request } from '../../../util/request';
 
-const fetchData = async () => {
-  const response = await useRequest({
-    method: 'GET',
-    url: '/api/data'
-  });
-  console.log(response.data);
+export class UserLoginService {
+  static async loginByEmailAndPassword({ email, password }) {
+    return await request(
+      {
+        method: 'POST',
+        url: '/auth/login'
+      },
+      {
+        email,
+        password
+      }
+    );
+  }
+}
+
+// Usage in components
+import { UserLoginService } from '../service/user/auth/login.service';
+
+const MyComponent = () => {
+  const handleLogin = async () => {
+    try {
+      const email = example@gmail.com;
+      const password = 123456;
+      const response = await UserLoginService.loginByEmailAndPassword({
+        email,
+        password
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching user:', error);
+    }
+  };
+
+  return <button onClick={handleLogin}>Log in</button>;
 };
+```
+
+### Service Architecture
+
+Organize your API calls using service classes. Each service should handle related API endpoints using the `request` utility:
+
+```javascript
+// Example: PostService.js
+import { request } from '../util/request';
+
+export class PostService {
+  static async getAllPosts() {
+    return await request({
+      method: 'GET',
+      url: '/posts'
+    });
+  }
+
+  static async getPostById(id) {
+    return await request({
+      method: 'GET',
+      url: `/posts/${id}`
+    });
+  }
+
+  static async createPost(postData) {
+    return await request(
+      {
+        method: 'POST',
+        url: '/posts'
+      },
+      postData
+    );
+  }
+
+  static async updatePost(id, postData) {
+    return await request(
+      {
+        method: 'PUT',
+        url: `/posts/${id}`
+      },
+      postData
+    );
+  }
+
+  static async deletePost(id) {
+    return await request({
+      method: 'DELETE',
+      url: `/posts/${id}`
+    });
+  }
+}
 ```
 
 ### Internationalization
