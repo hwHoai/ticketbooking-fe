@@ -1,6 +1,8 @@
 import { axiosInstance } from '../config/axios.config';
 import { logger } from './logger';
 
+const API_ENDPOINT_URL = import.meta.env.VITE_API_ENDPOINT_URL || 'http://localhost:8081/api/v1';
+
 const transformResponseLog = (response) => {
   return {
     status: response?.status,
@@ -18,7 +20,7 @@ export const request = async (option, data = null) => {
   try {
     const response = await axiosInstance({
       method: method || 'GET',
-      url: url,
+      url: API_ENDPOINT_URL + url,
       headers: header || {},
       data: data || null
     });

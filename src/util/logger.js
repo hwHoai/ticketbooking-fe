@@ -37,24 +37,24 @@ export const logger = {
   },
 
   // Convenience methods for each log level
-  error(message, context = 'General', ...args) {
-    this.log(message, 'error', context, ...args);
+  error(message, ...args) {
+    this.log(message, 'error', ...args);
   },
 
-  warn(message, context = 'General', ...args) {
-    this.log(message, 'warn', context, ...args);
+  warn(message, ...args) {
+    this.log(message, 'warn', ...args);
   },
 
-  info(message, context = 'General', ...args) {
-    this.log(message, 'info', context, ...args);
+  info(message, ...args) {
+    this.log(message, 'info', ...args);
   },
 
-  debug(message, context = 'General', ...args) {
-    this.log(message, 'debug', context, ...args);
+  debug(message, ...args) {
+    this.log(message, 'debug', ...args);
   },
 
-  trace(message, context = 'General', ...args) {
-    this.log(message, 'trace', context, ...args);
+  trace(message, ...args) {
+    this.log(message, 'trace', ...args);
   }
 };
 
