@@ -7,6 +7,7 @@ import { axiosInstance } from './config/axios.config';
 import { UserAuthenticationService } from './service/user/auth/authentication.service';
 
 export const App = () => {
+  //Auth Handleing
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
