@@ -305,7 +305,7 @@ const SearchForm = () => {
                   </div>
                 </>
               )}
-              <button className='rounded-lg bg-blue-900 px-5 py-4 text-sm font-medium text-white transition-colors duration-200 hover:bg-blue-600'>
+              <button className='rounded-lg border border-transparent bg-blue-900 px-5 py-3 text-sm font-medium text-white transition-colors duration-100 hover:bg-blue-600'>
                 Find Ticket
               </button>
             </div>
