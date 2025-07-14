@@ -3,7 +3,7 @@ import React from 'react';
 const TicketSection = () => {
   return (
     <>
-      {/* Bus Tickets Section */}
+      {/* Bus Tickets */}
       <div className='container mx-auto mt-8 p-4'>
         <div className='relative mb-4 flex items-center justify-end'>
           <h2 className='absolute left-1/2 -translate-x-1/2 transform text-2xl font-bold'>BUS TICKETS</h2>
@@ -20,7 +20,7 @@ const TicketSection = () => {
         </div>
       </div>
 
-      {/* Concert Tickets Section */}
+      {/* Concert Tickets */}
       <div className='container mx-auto mt-8 p-4'>
         <div className='relative mb-4 flex items-center justify-end'>
           <h2 className='absolute left-1/2 -translate-x-1/2 transform text-2xl font-bold'>CONCERT TICKETS</h2>
@@ -37,7 +37,7 @@ const TicketSection = () => {
         </div>
       </div>
 
-      {/* Event Tickets Section */}
+      {/* Event Tickets */}
       <div className='container mx-auto mt-8 p-4'>
         <div className='relative mb-4 flex items-center justify-end'>
           <h2 className='absolute left-1/2 -translate-x-1/2 transform text-2xl font-bold'>EVENT TICKETS</h2>

@@ -2,43 +2,15 @@ import React, { useState } from 'react';
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Data nằm trong component
   const carouselData = [
-    {
-      id: 1,
-      title: 'Summer Travel Deal',
-      image: '',
-      description: 'Get 30% off on all summer destinations'
-    },
-    {
-      id: 2,
-      title: 'Concert Series 2024',
-      image: '',
-      description: 'Book early and save on popular concerts'
-    },
-    {
-      id: 3,
-      title: 'Weekend Express',
-      image: '',
-      description: 'Fast and comfortable weekend trips'
-    },
-    {
-      id: 4,
-      title: 'Event Highlights',
-      image: '',
-      description: "Don't miss these amazing events"
-    },
-    {
-      id: 5,
-      title: 'Night Journey',
-      image: '',
-      description: 'Comfortable night travel options'
-    },
-    {
-      id: 6,
-      title: 'Family Package',
-      image: '',
-      description: 'Special deals for family trips'
-    }
+    { id: 1, title: 'Summer Travel Deal', image: '', description: 'Get 30% off on all summer destinations' },
+    { id: 2, title: 'Concert Series 2024', image: '', description: 'Book early and save on popular concerts' },
+    { id: 3, title: 'Weekend Express', image: '', description: 'Fast and comfortable weekend trips' },
+    { id: 4, title: 'Event Highlights', image: '', description: "Don't miss these amazing events" },
+    { id: 5, title: 'Night Journey', image: '', description: 'Comfortable night travel options' },
+    { id: 6, title: 'Family Package', image: '', description: 'Special deals for family trips' }
   ];
 
   const nextSlide = () => {
@@ -80,7 +52,7 @@ const Carousel = () => {
           </div>
         </div>
 
-        {/* Navigation Arrows */}
+        {/* Arrows */}
         <button
           onClick={prevSlide}
           className='bg-opacity-80 hover:bg-opacity-100 absolute top-1/2 left-2 -translate-y-1/2 transform rounded-full bg-white p-2 shadow-md transition-all'
@@ -99,7 +71,7 @@ const Carousel = () => {
           </svg>
         </button>
 
-        {/* Dots Indicator */}
+        {/* Dots */}
         <div className='mt-4 flex justify-center space-x-2'>
           {Array.from({ length: Math.ceil(carouselData.length / 2) }).map((_, index) => (
             <button
