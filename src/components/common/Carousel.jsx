@@ -3,14 +3,13 @@ import React, { useState } from 'react';
 const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Data nằm trong component
   const carouselData = [
-    { id: 1, title: 'Summer Travel Deal', image: '', description: 'Get 30% off on all summer destinations' },
-    { id: 2, title: 'Concert Series 2024', image: '', description: 'Book early and save on popular concerts' },
-    { id: 3, title: 'Weekend Express', image: '', description: 'Fast and comfortable weekend trips' },
-    { id: 4, title: 'Event Highlights', image: '', description: "Don't miss these amazing events" },
-    { id: 5, title: 'Night Journey', image: '', description: 'Comfortable night travel options' },
-    { id: 6, title: 'Family Package', image: '', description: 'Special deals for family trips' }
+    { id: 1, title: 'Summer Travel Deal', image: 'src/assets/home-page/1.png' },
+    { id: 2, title: 'Concert Series 2024', image: 'src/assets/home-page/2.png' },
+    { id: 3, title: 'Weekend Express', image: 'src/assets/home-page/3.png' },
+    { id: 4, title: 'Event Highlights', image: 'src/assets/home-page/4.png' },
+    { id: 5, title: 'Night Journey', image: 'src/assets/home-page/5.png' },
+    { id: 6, title: 'Family Package', image: 'src/assets/home-page/6.png' }
   ];
 
   const nextSlide = () => {
@@ -40,10 +39,8 @@ const Carousel = () => {
               <div key={slideIndex} className='flex w-full flex-shrink-0 gap-4'>
                 {carouselData.slice(slideIndex * 2, slideIndex * 2 + 2).map((item) => (
                   <div key={item.id} className='w-1/2 overflow-hidden rounded-lg bg-white'>
-                    <img src={item.image} alt={item.title} className='h-48 w-full object-cover' />
-                    <div className='p-4'>
-                      <h3 className='mb-2 text-lg font-semibold'>{item.title}</h3>
-                      <p className='text-sm text-gray-600'>{item.description}</p>
+                    <div className='aspect-[16/9]'>
+                      <img src={item.image} alt={item.title} className='h-full w-full object-cover' />
                     </div>
                   </div>
                 ))}

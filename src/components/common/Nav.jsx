@@ -4,23 +4,35 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <nav className='bg-teal-500 text-white'>
-      <div className='container mx-auto flex items-center justify-between'>
+    <nav className='bg-project-300 text-2xl text-white'>
+      <div className='container mx-auto flex h-27 items-center justify-between'>
         <div className='flex items-center space-x-10'>
           {/* Logo */}
-          <div className='text-xl font-bold'>Ticket Booking</div>
+          <div className='font-bold'>Ticket Booking</div>
 
           <div className='hidden items-center space-x-0 lg:flex'>
-            <a href='/' className='px-5 py-4 no-underline transition-colors hover:bg-teal-400'>
+            <a
+              href='/'
+              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-110 hover:text-gray-900'
+            >
               Home
             </a>
-            <a href='/bus-tickets' className='px-5 py-4 no-underline transition-colors hover:bg-teal-400'>
+            <a
+              href='/bus-tickets'
+              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-110 hover:text-gray-900'
+            >
               Bus
             </a>
-            <a href='/concert-tickets' className='px-5 py-4 no-underline transition-colors hover:bg-teal-400'>
+            <a
+              href='/concert-tickets'
+              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-110 hover:text-gray-900'
+            >
               Concert
             </a>
-            <a href='/event-tickets' className='px-5 py-4 no-underline transition-colors hover:bg-teal-400'>
+            <a
+              href='/event-tickets'
+              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-110 hover:text-gray-900'
+            >
               Event
             </a>
           </div>
@@ -34,7 +46,7 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
               placeholder='Search'
               className='w-32 rounded-l-lg bg-white px-3 py-1 text-sm text-gray-700 placeholder-gray-500 outline-none xl:w-80'
             />
-            <button className='rounded-r-lg bg-blue-900 px-3 py-1 transition-colors outline-none hover:bg-blue-600'>
+            <button className='bg-project-400 hover:bg-project-200 rounded-r-lg px-3 py-1 transition-colors outline-none'>
               <svg className='h-4 w-4 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                 <path
                   strokeLinecap='round'
@@ -50,9 +62,9 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
           <div className='relative'>
             <button
               onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-              className='flex items-center space-x-1 px-5 py-4 transition-colors duration-200 hover:bg-teal-400'
+              className='hover:bg-project-200 flex items-center space-x-1 px-5 py-9 no-underline transition-all duration-200 hover:scale-110 hover:text-gray-900'
             >
-              <span className='font-medium'>Account</span>
+              <span className=''>Account</span>
               <svg
                 className={`h-4 w-4 transition-transform duration-200 ${isAccountDropdownOpen ? 'rotate-180' : ''}`}
                 fill='none'
@@ -70,10 +82,10 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
                   <div className='py-1'>
                     <a
                       href='/my-profile'
-                      className='group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-teal-500'
+                      className='group hover:text-project-300 flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50'
                     >
                       <svg
-                        className='mr-3 h-5 w-5 text-gray-400 group-hover:text-teal-500'
+                        className='text-project-500 group-hover:text-project-300 mr-3 h-5 w-5'
                         fill='none'
                         stroke='currentColor'
                         viewBox='0 0 24 24'
@@ -89,10 +101,10 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
                     </a>
                     <a
                       href='/my-bookings'
-                      className='group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-teal-500'
+                      className='group hover:text-project-300 flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50'
                     >
                       <svg
-                        className='mr-3 h-5 w-5 text-gray-400 group-hover:text-teal-500'
+                        className='group-hover:text-project-300 mr-3 h-5 w-5 text-gray-400'
                         fill='none'
                         stroke='currentColor'
                         viewBox='0 0 24 24'
@@ -108,10 +120,10 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
                     </a>
                     <button
                       onClick={handleLogin}
-                      className='group flex w-full items-center px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 hover:text-teal-500'
+                      className='group hover:text-project-300 flex w-full items-center px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50'
                     >
                       <svg
-                        className='mr-3 h-5 w-5 text-gray-400 group-hover:text-teal-500'
+                        className='group-hover:text-project-300 mr-3 h-5 w-5 text-gray-400'
                         fill='none'
                         stroke='currentColor'
                         viewBox='0 0 24 24'
@@ -127,10 +139,10 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
                     </button>
                     <a
                       href='/logout'
-                      className='group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-teal-500'
+                      className='group hover:text-project-300 flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50'
                     >
                       <svg
-                        className='mr-3 h-5 w-5 text-gray-400 group-hover:text-teal-500'
+                        className='group-hover:text-project-300 mr-3 h-5 w-5 text-gray-400'
                         fill='none'
                         stroke='currentColor'
                         viewBox='0 0 24 24'
@@ -154,7 +166,7 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
         {/* Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className='flex items-center rounded px-3 py-2 text-white hover:bg-teal-400 lg:hidden'
+          className='hover:bg-project-200 flex items-center rounded px-3 py-2 text-white lg:hidden'
         >
           <svg className='h-12 w-12' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
             {isMobileMenuOpen ? (
@@ -168,7 +180,7 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
 
       {/* Menu */}
       <div
-        className={`fixed top-16 right-0 z-50 h-fit w-fit transform bg-teal-600 transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`bg-project-200 fixed top-27 right-0 z-50 h-fit w-fit transform transition-transform duration-300 ease-in-out lg:hidden ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -179,9 +191,9 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
               <input
                 type='text'
                 placeholder='Search'
-                className='flex-1 rounded-l-lg bg-white px-3 py-2 text-sm text-gray-700 placeholder-gray-500 outline-none'
+                className='text-project-500 placeholder-project-500 flex-1 rounded-l-lg bg-white px-3 py-2 text-sm outline-none'
               />
-              <button className='rounded-r-lg bg-blue-900 px-3 py-2 hover:bg-blue-600'>
+              <button className='bg-project-400 hover:bg-project-300 rounded-r-lg px-3 py-2 transition-colors'>
                 <svg className='h-4 w-4 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                   <path
                     strokeLinecap='round'
@@ -194,36 +206,36 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
             </div>
           </div>
           {/* Navigation Links */}
-          <div className='border-t border-teal-500 pt-2'>
-            <a href='/' className='block rounded-md px-3 py-2 text-white hover:bg-teal-500'>
+          <div className='border-project-300 border-t pt-2'>
+            <a href='/' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
               Home
             </a>
-            <a href='/bus-tickets' className='block rounded-md px-3 py-2 text-white hover:bg-teal-500'>
+            <a href='/bus-tickets' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
               Bus
             </a>
-            <a href='/concert-tickets' className='block rounded-md px-3 py-2 text-white hover:bg-teal-500'>
+            <a href='/concert-tickets' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
               Concert
             </a>
-            <a href='/event-tickets' className='block rounded-md px-3 py-2 text-white hover:bg-teal-500'>
+            <a href='/event-tickets' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
               Event
             </a>
           </div>
 
           {/* Account Links */}
-          <div className='border-t border-teal-500 pt-2'>
-            <a href='/my-profile' className='block rounded-md px-3 py-2 text-white hover:bg-teal-500'>
+          <div className='border-project-300 border-t pt-2'>
+            <a href='/my-profile' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
               My Profile
             </a>
-            <a href='/my-bookings' className='block rounded-md px-3 py-2 text-white hover:bg-teal-500'>
+            <a href='/my-bookings' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
               My Bookings
             </a>
             <button
               onClick={handleLogin}
-              className='block w-full rounded-md px-3 py-2 text-left text-white hover:bg-teal-500'
+              className='hover:bg-project-300 block w-full rounded-md px-3 py-2 text-left text-white'
             >
               Sign In
             </button>
-            <a href='/logout' className='block rounded-md px-3 py-2 text-white hover:bg-teal-500'>
+            <a href='/logout' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
               Sign Out
             </a>
           </div>

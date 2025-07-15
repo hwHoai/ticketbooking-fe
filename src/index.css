@@ -5,6 +5,7 @@
     font-family:
       'lato',
       'Inter',
+      'Poppins',
       system-ui,
       -apple-system,
       BlinkMacSystemFont,
@@ -24,6 +25,17 @@
   body {
     color: var(--color-black);
     background-color: var(--color-white);
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
   }
 }
 
@@ -69,4 +81,11 @@
   --color-info-200: #bae6fd;
   --color-info-300: #38bdf8;
   --color-info-400: #0284c7;
+
+  --color-project-100: #d6e8ee;
+  --color-project-200: #97cadb;
+  --color-project-300: #018abe;
+  --color-project-400: #02457a;
+  --color-project-500: #001b48;
+  --color-project-600: #045e9e;
 }
