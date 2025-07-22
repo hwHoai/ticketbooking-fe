@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) => {
+const Heading = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <nav className='bg-project-300 text-2xl text-white'>
-      <div className='container mx-auto flex h-27 items-center justify-between'>
+    <nav className='bg-project-300 text-3xl text-white'>
+      <div className='container mx-auto flex h-30 items-center justify-between'>
         <div className='flex items-center space-x-10'>
           {/* Logo */}
           <div className='font-bold'>Ticket Booking</div>
@@ -13,25 +14,25 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
           <div className='hidden items-center space-x-0 lg:flex'>
             <a
               href='/'
-              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-110 hover:text-gray-900'
+              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
             >
               Home
             </a>
             <a
               href='/bus-tickets'
-              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-110 hover:text-gray-900'
+              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
             >
               Bus
             </a>
             <a
               href='/concert-tickets'
-              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-110 hover:text-gray-900'
+              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
             >
               Concert
             </a>
             <a
               href='/event-tickets'
-              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-110 hover:text-gray-900'
+              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
             >
               Event
             </a>
@@ -62,17 +63,9 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
           <div className='relative'>
             <button
               onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-              className='hover:bg-project-200 flex items-center space-x-1 px-5 py-9 no-underline transition-all duration-200 hover:scale-110 hover:text-gray-900'
+              className='hover:bg-project-200 flex items-center space-x-1 px-5 py-9 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
             >
               <span className=''>Account</span>
-              <svg
-                className={`h-4 w-4 transition-transform duration-200 ${isAccountDropdownOpen ? 'rotate-180' : ''}`}
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
-              </svg>
             </button>
 
             {isAccountDropdownOpen && (
@@ -249,4 +242,10 @@ const Nav = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) =
   );
 };
 
-export default Nav;
+Heading.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+  isAccountDropdownOpen: PropTypes.bool.isRequired,
+  setIsAccountDropdownOpen: PropTypes.func.isRequired
+};
+
+export default Heading;

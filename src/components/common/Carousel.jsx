@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -26,7 +26,7 @@ const Carousel = () => {
 
   return (
     <div className='container mx-auto mt-8 p-4'>
-      <h2 className='mb-6 text-center text-2xl font-bold'>WHAT'S NEW</h2>
+      <h2 className='mb-6 text-center text-2xl font-bold'>WHAT&apos;S NEW</h2>
 
       <div className='relative'>
         {/* Carousel Container */}
