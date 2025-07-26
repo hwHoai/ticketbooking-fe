@@ -4,6 +4,7 @@ import Heading from '../../components/common/Heading';
 import Carousel from '../../components/common/carousel';
 import SearchForm from '../../components/common/SearchForm';
 import TicketSection from '../../components/common/TicketSection';
+import { useState } from 'react';
 
 export const HomePage = () => {
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
