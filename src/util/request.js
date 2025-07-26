@@ -31,7 +31,7 @@ export const request = async (option, data = null) => {
 
     // Log the successful response
     if (import.meta.env.VITE_ENVIRONMENT === 'dev') {
-      logger.info(transformResponseLog(response), 'Request Success');
+      logger.debug(transformResponseLog(response), 'Request Success');
     }
 
     return transformResponseLog(response);

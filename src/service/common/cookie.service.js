@@ -1,12 +1,10 @@
-import LZString from 'lz-string';
 export class CookieService {
   static setCookie = (name, value = '', expire, path = '/') => {
-    // const compressed = LZString.compressToUTF16(value);
-    const compressed = btoa(value);
-    const originalSize = new Blob([value]).size;
-    const compressedSize = new Blob([compressed]).size;
-    console.log(`Original size: ${originalSize} bytes, Compressed size: ${compressedSize} bytes`);
-    document.cookie = `${name}=${compressed}; expires=${expire}; path=${path}`;
+    if (!value) {
+      console.warn(`Cookie value for ${name} is empty. Not setting cookie.`);
+      return;
+    }
+    document.cookie = `${name}=${value}; expires=${expire}; path=${path}`;
   };
 
   static getCookie = (name) => {
