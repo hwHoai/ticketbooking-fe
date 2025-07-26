@@ -1,6 +1,6 @@
 import { Routes, Route, BrowserRouter } from 'react-router';
 import { privateRoute } from './route/PrivateRoute';
-import { publicRoute } from './route/publicroute';
+import { publicRoute } from './route/PublicRoute';
 import { logger } from './util/logger';
 import { useEffect, useState } from 'react';
 import { axiosInstance } from './config/axios.config';
