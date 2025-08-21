@@ -17,21 +17,17 @@ const LOG_LEVELS = {
   trace: { priority: 4, style: 'color: fireBrick; background-color: orange; padding: 2px 4px; border-radius: 2px;' }
 };
 
-// Current log level - can be adjusted based on environment
 const currentLevel = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'debug' : 'info';
 
-// Function to get caller info from stack trace
 function getCallerInfo() {
   const errStack = new Error().stack;
   if (!errStack) return { file: 'unknown', line: 'unknown' };
 
   const stackLines = errStack.split('\n');
-  // Skip current function, log method, and convenience method
   const callerLine = stackLines[4] || stackLines[3] || stackLines[2];
 
   if (!callerLine) return { file: 'unknown', line: 'unknown' };
 
-  // Extract file path and line from stack trace
   const callerPathArr = callerLine.split('/');
   const file = callerPathArr[callerPathArr.length - 1].split('?')[0];
   const line = callerLine.match(/:(\d+):(\d+)/)[0];

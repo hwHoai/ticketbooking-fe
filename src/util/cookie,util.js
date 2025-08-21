@@ -1,4 +1,4 @@
-export class CookieService {
+export class Cookie {
   static setCookie = (name, value = '', expire, path = '/') => {
     if (!value) {
       console.warn(`Cookie value for ${name} is empty. Not setting cookie.`);

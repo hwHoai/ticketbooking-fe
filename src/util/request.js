@@ -15,13 +15,13 @@ const transformResponseLog = (response) => {
 };
 
 export const request = async (option, data = null) => {
-  const { method, url, header } = option;
+  const { method, url, headers } = option;
 
   try {
     const response = await axiosInstance({
       method: method || 'GET',
       url: API_ENDPOINT_URL + url,
-      headers: header || {},
+      headers: headers || {},
       data: data || null
     });
 

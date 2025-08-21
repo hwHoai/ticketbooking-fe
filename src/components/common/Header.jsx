@@ -1,37 +1,24 @@
-import { use, useContext, useEffect, useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import { AuthProvider } from '../provider/auth.provider';
-import { CookieService } from '../../service/common/cookie.service';
-import { logger } from '../../util/logger';
-import { UserAuthenticationService } from '../../service/user/auth/authentication.service';
-import { TokenService } from '../../service/common/token.service';
+import { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { UserInfoService } from '../../service/user/user.info.service';
+import { UserAuthenticationService } from '../../service/user/user.authentication.service';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
-  const { loginWithRedirect } = useAuth0();
-  const { setIsAuthenticated, isAuthenticated } = useContext(AuthProvider);
-  const searchParams = new URLSearchParams(window.location.search);
-  const code = searchParams.get('code');
-  const handleLogin = async () => {
-    await loginWithRedirect();
-  };
+  const { isAuthenticated, accessToken } = useSelector((state) => state.auth);
 
-  const setAuthContext = async () => {
-    if (code && !isAuthenticated) {
-      // Handle the authentication code
-      setIsAuthenticated(true);
-      const token = await UserAuthenticationService.oauthGetAccessToken();
-      if (!token.data.access_token) {
-        logger.debug('Access token fetched unsuccessfully', token);
-        throw new Error('Access token is missing');
-      }
-      TokenService.setTokenToCookie('access_token', token.data.access_token, token.data.expires_in);
-    }
-  };
+  const handleLogin = useCallback(async () => {
+    UserAuthenticationService.login();
+  }, []);
+
   useEffect(() => {
-    setAuthContext();
-  }, [code, isAuthenticated]);
+    if (isAuthenticated) {
+      (async () => {
+        const userData = await UserInfoService.getUserData(accessToken);
+      })();
+    }
+  }, [isAuthenticated, accessToken]);
 
   return (
     <nav className='bg-project-300 text-3xl text-white'>
