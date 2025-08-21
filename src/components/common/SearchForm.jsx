@@ -13,7 +13,7 @@ const SearchForm = () => {
     location: null,
     ticketType: ''
   });
-  const [tripType, setTripType] = useState(null);
+  const [tripType, setTripType] = useState({ value: 'One-way', label: 'One-way' });
   const [startDate, setStartDate] = useState('');
   const [returnDate, setReturnDate] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -114,7 +114,10 @@ const SearchForm = () => {
                 <Select
                   options={typeOptions}
                   value={tripType}
-                  onChange={setTripType}
+                  onChange={(option) => {
+                    setTripType(option);
+                    console.log(option);
+                  }}
                   placeholder='Type'
                   isClearable={false}
                   styles={selectStyles}

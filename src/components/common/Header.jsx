@@ -1,8 +1,24 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { UserInfoService } from '../../service/user/user.info.service';
+import { UserAuthenticationService } from '../../service/user/user.authentication.service';
 
-const Heading = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen }) => {
+const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
+  const { isAuthenticated, accessToken } = useSelector((state) => state.auth);
+
+  const handleLogin = useCallback(async () => {
+    UserAuthenticationService.login();
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      (async () => {
+        const userData = await UserInfoService.getUserData(accessToken);
+      })();
+    }
+  }, [isAuthenticated, accessToken]);
 
   return (
     <nav className='bg-project-300 text-3xl text-white'>
@@ -242,10 +258,4 @@ const Heading = ({ handleLogin, isAccountDropdownOpen, setIsAccountDropdownOpen 
   );
 };
 
-Heading.propTypes = {
-  handleLogin: PropTypes.func.isRequired,
-  isAccountDropdownOpen: PropTypes.bool.isRequired,
-  setIsAccountDropdownOpen: PropTypes.func.isRequired
-};
-
-export default Heading;
+export default Header;

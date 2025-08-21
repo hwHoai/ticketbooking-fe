@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -11,6 +11,13 @@ const Carousel = () => {
     { id: 5, title: 'Night Journey', image: 'src/assets/home-page/5.png' },
     { id: 6, title: 'Family Package', image: 'src/assets/home-page/6.png' }
   ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % Math.ceil(carouselData.length / 2));
