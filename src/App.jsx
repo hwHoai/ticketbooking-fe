@@ -54,7 +54,7 @@ export const App = () => {
         const authCode = searchParams.get('code');
         const accessToken = await handleAuthentication(authCode);
         logger.info(accessToken);
-        if (!accessToken) {
+        if (authCode && !accessToken) {
           UserAuthenticationService.login();
         }
       }
