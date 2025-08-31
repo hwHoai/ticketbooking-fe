@@ -1,175 +1,195 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { UserInfoService } from '../../service/user/user.info.service';
+import { useSelector, useDispatch } from 'react-redux';
 import { UserAuthenticationService } from '../../service/user/user.authentication.service';
+import {
+  Bus,
+  Calendar,
+  ChevronDown,
+  EllipsisVertical,
+  Guitar,
+  History,
+  Home,
+  Info,
+  LoaderCircle,
+  LogOut,
+  MoveRight,
+  Search,
+  ShoppingCart,
+  UserRound
+} from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { logout } from '../../lib/redux/auth.slice';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
-  const { isAuthenticated, accessToken } = useSelector((state) => state.auth);
+  const { isAuthenticated, userName, userAvatar } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
-  const handleLogin = useCallback(async () => {
-    UserAuthenticationService.login();
+  const handleLogIn = useCallback(async () => {
+    setLoading(true);
+    await UserAuthenticationService.login();
+  }, []);
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
+
+  const closeDropdown = useCallback(() => {
+    setIsAccountDropdownOpen(false);
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      (async () => {
-        const userData = await UserInfoService.getUserData(accessToken);
-      })();
+    if (isAuthenticated && userName && userAvatar) {
+      setLoading(false);
+      return;
     }
-  }, [isAuthenticated, accessToken]);
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userName, userAvatar]);
 
   return (
     <nav className='bg-project-300 text-3xl text-white'>
-      <div className='container mx-auto flex h-30 items-center justify-between'>
+      <div className='container mx-auto flex items-center justify-between'>
         <div className='flex items-center space-x-10'>
           {/* Logo */}
-          <div className='font-bold'>Ticket Booking</div>
+          <Link to='/' className='font-bold text-white no-underline hover:cursor-pointer'>
+            Ticket Booking
+          </Link>
 
-          <div className='hidden items-center space-x-0 lg:flex'>
-            <a
-              href='/'
-              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
+          <div className='hidden items-center space-x-0 text-xl text-gray-50 lg:flex'>
+            <Link
+              to='/'
+              className='px-5 py-6 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
             >
               Home
-            </a>
-            <a
-              href='/bus-tickets'
-              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
+            </Link>
+            <Link
+              to='/bus_tickets'
+              className='px-5 py-6 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
             >
               Bus
-            </a>
-            <a
-              href='/concert-tickets'
-              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
+            </Link>
+            <Link
+              to='/concert_tickets'
+              className='px-5 py-6 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
             >
               Concert
-            </a>
-            <a
-              href='/event-tickets'
-              className='hover:bg-project-200 px-5 py-9 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
+            </Link>
+            <Link
+              to='/event_tickets'
+              className='px-5 py-6 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
             >
               Event
-            </a>
+            </Link>
           </div>
         </div>
 
-        <div className='hidden items-center space-x-2 lg:flex'>
+        <div className='hidden items-center space-x-6 lg:flex'>
           {/* Search Bar */}
           <div className='relative flex'>
             <input
               type='text'
               placeholder='Search'
-              className='w-32 rounded-l-lg bg-white px-3 py-1 text-sm text-gray-700 placeholder-gray-500 outline-none xl:w-80'
+              className='w-32 rounded-l-lg bg-white px-3 py-2 text-sm text-gray-700 placeholder-gray-500 outline-none xl:w-80'
             />
-            <button className='bg-project-400 hover:bg-project-200 rounded-r-lg px-3 py-1 transition-colors outline-none'>
-              <svg className='h-4 w-4 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
+            <button className='bg-project-400 rounded-r-lg px-3 py-2 transition-colors hover:cursor-pointer'>
+              <Search size={20} />
+            </button>
+          </div>
+
+          {/* Auth state */}
+          {isAuthenticated ? (
+            <div className='relative'>
+              <div
+                className='flex flex-row items-center justify-around gap-2 rounded-lg px-3 py-2 text-white transition-all duration-200 hover:cursor-pointer'
+                onClick={() => setIsAccountDropdownOpen((prev) => !prev)}
+              >
+                <img
+                  src={userAvatar}
+                  alt='user_avatar'
+                  className='h-8 w-8 rounded-full bg-white'
+                  loading='lazy'
+                  width={'32'}
+                  onError={(e) => {
+                    e.currentTarget.src = '../../../assets/img/default_user.png';
+                  }}
+                  referrerPolicy='no-referrer'
                 />
-              </svg>
-            </button>
-          </div>
-
-          {/* Account */}
-          <div className='relative'>
-            <button
-              onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-              className='hover:bg-project-200 flex items-center space-x-1 px-5 py-9 no-underline transition-all duration-200 hover:scale-118 hover:text-gray-900'
-            >
-              <span className=''>Account</span>
-            </button>
-
-            {isAccountDropdownOpen && (
-              <>
-                <div className='fixed inset-0 z-10' onClick={() => setIsAccountDropdownOpen(false)} />
-                <div className='absolute right-4 z-20 mt-2 w-64 origin-top-right rounded-xl border border-gray-100 bg-white shadow-xl'>
-                  <div className='py-1'>
-                    <a
-                      href='/my-profile'
-                      className='group hover:text-project-300 flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50'
-                    >
-                      <svg
-                        className='text-project-500 group-hover:text-project-300 mr-3 h-5 w-5'
-                        fill='none'
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
-                        />
-                      </svg>
-                      <p className='font-medium'>My Profile</p>
-                    </a>
-                    <a
-                      href='/my-bookings'
-                      className='group hover:text-project-300 flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50'
-                    >
-                      <svg
-                        className='group-hover:text-project-300 mr-3 h-5 w-5 text-gray-400'
-                        fill='none'
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2'
-                        />
-                      </svg>
-                      <p className='font-medium'>My Bookings</p>
-                    </a>
-                    <button
-                      onClick={handleLogin}
-                      className='group hover:text-project-300 flex w-full items-center px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50'
-                    >
-                      <svg
-                        className='group-hover:text-project-300 mr-3 h-5 w-5 text-gray-400'
-                        fill='none'
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1'
-                        />
-                      </svg>
-                      <p className='font-medium'>Sign In</p>
-                    </button>
-                    <a
-                      href='/logout'
-                      className='group hover:text-project-300 flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50'
-                    >
-                      <svg
-                        className='group-hover:text-project-300 mr-3 h-5 w-5 text-gray-400'
-                        fill='none'
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'
-                        />
-                      </svg>
-                      <p className='font-medium'>Sign Out</p>
-                    </a>
-                  </div>
+                <span className='text-sm'>Welcome, {userName}!</span>
+                <ChevronDown
+                  size={28}
+                  className={`text-white transition-transform duration-300 ${
+                    isAccountDropdownOpen ? 'rotate-0' : 'rotate-180'
+                  }`}
+                />
+              </div>
+              {isAccountDropdownOpen && (
+                <div className='absolute left-[50%] z-50 flex w-64 translate-x-[-50%] flex-col rounded-lg bg-white px-2 py-2 text-sm text-black/85 shadow-sm'>
+                  <Link
+                    to='/account'
+                    onClick={closeDropdown}
+                    className='flex flex-row items-center justify-start gap-2 rounded-t-lg px-4 py-2 hover:bg-gray-200'
+                  >
+                    <UserRound size={20} /> My Account
+                  </Link>
+                  <Link
+                    to='/purchase-history'
+                    onClick={closeDropdown}
+                    className='flex flex-row items-center justify-start gap-2 px-4 py-2 hover:bg-gray-200'
+                  >
+                    <History size={20} />
+                    Purchase History
+                  </Link>
+                  <Link
+                    to='/cart'
+                    onClick={closeDropdown}
+                    className='flex flex-row items-center justify-start gap-2 px-4 py-2 hover:bg-gray-200'
+                  >
+                    <ShoppingCart size={20} /> Cart
+                  </Link>
+                  <button
+                    className='flex flex-row items-center justify-start gap-2 px-4 py-2 text-left hover:bg-gray-200'
+                    onClick={() => {
+                      dispatch(logout());
+                      closeDropdown();
+                      navigate('/');
+                    }}
+                  >
+                    <LogOut size={20} />
+                    Logout
+                  </button>
+                  <Link
+                    to='/help'
+                    onClick={closeDropdown}
+                    className='flex flex-row items-center justify-start gap-2 rounded-b-lg px-4 py-2 hover:bg-gray-200'
+                  >
+                    <Info size={20} />
+                    Help
+                  </Link>
                 </div>
-              </>
-            )}
-          </div>
+              )}
+            </div>
+          ) : (
+            <div className='flex items-center space-x-2 text-2xl'>
+              <Link
+                to='/cart'
+                className='hover:bg-project-200 flex items-center rounded px-3 py-2 no-underline transition-all duration-200'
+              >
+                <ShoppingCart size={28} />
+              </Link>
+              <button
+                onClick={handleLogIn}
+                className='hover:bg-project-200 flex items-center rounded px-3 py-2 transition-all duration-200 hover:scale-118 hover:cursor-pointer'
+              >
+                {loading ? <LoaderCircle className='h-6 w-6 animate-spin' /> : 'Log In'}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Menu Button */}
@@ -177,82 +197,91 @@ const Header = () => {
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className='hover:bg-project-200 flex items-center rounded px-3 py-2 text-white lg:hidden'
         >
-          <svg className='h-12 w-12' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-            {isMobileMenuOpen ? (
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
-            ) : (
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 6h16M4 12h16M4 18h16' />
-            )}
-          </svg>
+          <EllipsisVertical size={28} className='my-2' />
         </button>
       </div>
 
-      {/* Menu */}
+      {/* Mobile Menu */}
       <div
-        className={`bg-project-200 fixed top-27 right-0 z-50 h-fit w-fit transform transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`bg-project-200 fixed top-0 right-0 z-50 h-screen w-fit transform transition-transform duration-300 ease-in-out lg:hidden ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className='h-full overflow-y-auto px-10 py-5'>
-          {/* Search Bar */}
-          <div className='py-5'>
-            <div className='flex'>
-              <input
-                type='text'
-                placeholder='Search'
-                className='text-project-500 placeholder-project-500 flex-1 rounded-l-lg bg-white px-3 py-2 text-sm outline-none'
-              />
-              <button className='bg-project-400 hover:bg-project-300 rounded-r-lg px-3 py-2 transition-colors'>
-                <svg className='h-4 w-4 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
-                  />
-                </svg>
-              </button>
-            </div>
+        <div className='h-full overflow-y-auto px-8 py-2'>
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className='flex w-full items-center justify-end rounded py-2 text-white lg:hidden'
+          >
+            <MoveRight size={28} />
+          </button>
+          <div
+            className='flex w-64 flex-row items-center justify-around gap-2 rounded-lg px-3 py-2 text-white transition-all duration-200 hover:cursor-pointer'
+            onClick={() => setIsAccountDropdownOpen((prev) => !prev)}
+          >
+            <img
+              src={userAvatar}
+              alt='user_avatar'
+              className='h-10 w-10 rounded-full bg-white'
+              loading='lazy'
+              width={'40'}
+              onError={(e) => {
+                e.currentTarget.src = '../../../assets/img/default_user.png';
+              }}
+              referrerPolicy='no-referrer'
+            />
+            <span className='text-sm'>Welcome, {userName}!</span>
           </div>
           {/* Navigation Links */}
-          <div className='border-project-300 border-t pt-2'>
-            <a href='/' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
-              Home
-            </a>
-            <a href='/bus-tickets' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
-              Bus
-            </a>
-            <a href='/concert-tickets' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
-              Concert
-            </a>
-            <a href='/event-tickets' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
-              Event
-            </a>
-          </div>
-
-          {/* Account Links */}
-          <div className='border-project-300 border-t pt-2'>
-            <a href='/my-profile' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
-              My Profile
-            </a>
-            <a href='/my-bookings' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
-              My Bookings
-            </a>
-            <button
-              onClick={handleLogin}
-              className='hover:bg-project-300 block w-full rounded-md px-3 py-2 text-left text-white'
+          <div className='border-project-300 border-t pt-2 text-xl'>
+            <Link
+              to='/'
+              onClick={closeMobileMenu}
+              className='hover:bg-project-300 flex w-full flex-row gap-2 rounded-md px-3 py-2 text-left text-white no-underline'
             >
-              Sign In
+              <Home />
+              <span>Home</span>
+            </Link>
+            <Link
+              to='/bus_tickets'
+              onClick={closeMobileMenu}
+              className='hover:bg-project-300 flex w-full flex-row gap-2 rounded-md px-3 py-2 text-left text-white no-underline'
+            >
+              <Bus />
+              <span>Bus</span>
+            </Link>
+            <Link
+              to='/concert_tickets'
+              onClick={closeMobileMenu}
+              className='hover:bg-project-300 flex w-full flex-row gap-2 rounded-md px-3 py-2 text-left text-white no-underline'
+            >
+              <Guitar />
+              <span>Concert</span>
+            </Link>
+            <Link
+              to='/event-tickets'
+              onClick={closeMobileMenu}
+              className='hover:bg-project-300 flex w-full flex-row gap-2 rounded-md px-3 py-2 text-left text-white no-underline'
+            >
+              <Calendar />
+              <span>Event</span>
+            </Link>
+            <button
+              className='flex flex-row items-center justify-start gap-2 px-4 py-2 text-left hover:bg-gray-200'
+              onClick={() => {
+                dispatch(logout());
+                closeDropdown();
+                navigate('/');
+              }}
+            >
+              <LogOut size={20} />
+              Logout
             </button>
-            <a href='/logout' className='hover:bg-project-300 block rounded-md px-3 py-2 text-white'>
-              Sign Out
-            </a>
           </div>
         </div>
       </div>
 
       {isMobileMenuOpen && (
-        <div className='bg-opacity-50 fixed inset-0 z-40 lg:hidden' onClick={() => setIsMobileMenuOpen(false)} />
+        <div className='fixed inset-0 z-40 bg-gray-950/30 lg:hidden' onClick={() => setIsMobileMenuOpen(false)} />
       )}
     </nav>
   );

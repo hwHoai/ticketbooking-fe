@@ -5,7 +5,7 @@ import { locationOptions, typeOptions, timeOptions } from '../../constant/select
 import selectStyles from '../../constant/selectStyles';
 import SearchTicket from './SearchTicket';
 
-const SearchForm = () => {
+const SearchForm = ({ className }) => {
   const [activeTab, setActiveTab] = useState('bus');
   const [selectedValues, setSelectedValues] = useState({
     origin: null,
@@ -55,11 +55,10 @@ const SearchForm = () => {
   };
 
   return (
-    <div className='search-form text-xs'>
-      <div className='h-81 bg-gray-300'></div>
+    <div className={`${className} search-form text-xs`}>
       <div className='container mx-auto -mt-26'>
         {/* Tabs */}
-        <div className='mb-0'>
+        <div className='mb-0 flex gap-1'>
           <button
             onClick={() => setActiveTab('bus')}
             className={`rounded-2xl rounded-b-none px-4 py-2 ${activeTab === 'bus' ? 'bg-project-600 text-white' : 'bg-project-200 hover:bg-project-100'}`}
@@ -83,7 +82,7 @@ const SearchForm = () => {
         {/* Search Form */}
         <form
           onSubmit={handleSubmit}
-          className='animate-flip-down container flex flex-wrap justify-between gap-3 rounded-lg rounded-tl-none bg-gray-100 p-4 shadow-lg 2xl:flex-nowrap'
+          className='animate-flip-down container flex flex-wrap justify-between gap-3 rounded-lg rounded-tl-none bg-gray-100 px-6 py-4 text-lg shadow-lg 2xl:flex-nowrap'
         >
           {/* Bus Tab */}
           {activeTab === 'bus' && (
@@ -138,7 +137,7 @@ const SearchForm = () => {
                     placeholder='Return Date'
                   />
                 ) : (
-                  <div className='h-16 w-full rounded-md border border-gray-300 bg-gray-100 p-3 text-center text-gray-300'>
+                  <div className='h-12 w-full rounded-md border border-gray-300 bg-gray-100 p-3 text-center text-gray-300'>
                     ---
                   </div>
                 )}
@@ -177,7 +176,7 @@ const SearchForm = () => {
           )}
 
           {/* Button */}
-          <div className='w-full min-w-0 xl:w-full 2xl:w-auto'>
+          <div className='flex h-12 w-full min-w-0 items-center xl:w-full 2xl:w-auto'>
             <button
               type='submit'
               className='bg-project-400 hover:bg-project-300 w-full rounded-md px-6 py-3 text-white transition-colors'

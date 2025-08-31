@@ -1,13 +1,14 @@
-import Carousel from '../../components/common/carousel';
+import Carousel from './Carousel';
 import SearchForm from '../../components/common/SearchForm';
-import TicketSection from '../../components/common/TicketSection';
+import TicketSection from './TicketSection';
 import Header from '../../components/common/Header';
 
 export const HomePage = () => {
   return (
-    <div className='text-black-900'>
+    <div className='text-black-900 relative'>
       <Header />
-      <SearchForm />
+      <div id='banner' className='h-81 bg-gray-300'></div>
+      <SearchForm className={`absolute top-100 left-1/2 z-10 -translate-x-1/2 transform`} />
       <Carousel />
       <TicketSection />
     </div>
