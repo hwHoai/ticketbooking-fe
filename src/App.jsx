@@ -5,62 +5,73 @@ import { logger } from './util/logger';
 import { Cookie } from './util/cookie,util';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, logout } from './lib/redux/auth.slice';
+import { login } from './lib/redux/auth.slice';
 import { UserAuthenticationService } from './service/user/user.authentication.service';
+import { UserInfoService } from './service/user/user.info.service';
+import NotFound from './screen/NotFound';
 
 export const App = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const currentAccessToken = Cookie.getCookie('access_token');
+  const auth0Code = searchParams.get('code');
+  const { isAuthenticated, accessToken, userName, userAvatar } = useSelector((state) => state.auth);
 
-  const checkAuthentication = useCallback(() => {
-    const accessToken = Cookie.getCookie('access_token');
-
-    if (!accessToken) {
-      dispatch(logout());
-      logger.info('No access token found, logging out');
-      return false;
+  const handleAuthentication = useCallback(async (code) => {
+    if (!code) {
+      logger.error('No authentication code found');
+      return;
     }
-    dispatch(login(accessToken));
-    return true;
-  }, [dispatch]);
+    const tokenResponse = await UserAuthenticationService.oauthGetAccessToken(code);
+    const accessToken = tokenResponse.data.access_token;
+    if (!accessToken) {
+      throw new Error('No access token found');
+    }
 
-  const handleAuthentication = useCallback(
-    async (code) => {
-      if (!code) {
-        logger.error('No authentication code found');
-        return;
-      }
-      const tokenResponse = await UserAuthenticationService.oauthGetAccessToken(code);
-      const accessToken = tokenResponse.data.access_token;
-      if (!accessToken) {
-        logger.error('No access token found');
-        return null;
-      }
-
-      const tokenExpireTime = new Date(Date.now() + (tokenResponse.data.expires_in - 5 * 60) * 1000).toUTCString(); //expires 5 minutes early
-      logger.info(tokenExpireTime);
-      Cookie.setCookie('access_token', accessToken, tokenExpireTime, '/');
-      dispatch(login(accessToken));
-      return accessToken;
-    },
-    [dispatch]
-  );
+    const tokenExpireTime = new Date(Date.now() + (tokenResponse.data.expires_in - 5 * 60) * 1000).toUTCString(); //expires 5 minutes early
+    logger.info(tokenExpireTime);
+    Cookie.setCookie('access_token', accessToken, tokenExpireTime, '/');
+    return accessToken;
+  }, []);
 
   useEffect(() => {
     (async () => {
-      if (!checkAuthentication()) {
-        // User is authenticated
-        const authCode = searchParams.get('code');
-        const accessToken = await handleAuthentication(authCode);
-        logger.info(accessToken);
-        if (authCode && !accessToken) {
-          UserAuthenticationService.login();
+      if (currentAccessToken) {
+        if (isAuthenticated && accessToken && userName && userAvatar) {
+          return;
         }
+        await UserInfoService.getUserData(currentAccessToken)
+          .then((res) => ({ userName: res.data.name, userAvatar: res.data.picture, accessToken: currentAccessToken }))
+          .then(async (userData) => {
+            dispatch(login(userData));
+          })
+          .catch((err) => {
+            logger.error(err);
+          });
+        return;
+      }
+
+      if (auth0Code) {
+        await handleAuthentication(auth0Code)
+          .then(async (accessToken) => {
+            const userDataResponse = await UserInfoService.getUserData(accessToken);
+            return {
+              userAvatar: userDataResponse.data.picture,
+              userName: userDataResponse.data.name,
+              accessToken
+            };
+          })
+          .then(async (userData) => {
+            dispatch(login(userData));
+          })
+          .catch((err) => {
+            UserAuthenticationService.login();
+            logger.error(err);
+          });
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentAccessToken, auth0Code]);
 
   return (
     <BrowserRouter>
@@ -69,6 +80,7 @@ export const App = () => {
           <Route key={i} {...route} />
         ))}
         {isAuthenticated ? privateRoute.map((route, i) => <Route key={i} {...route} />) : <></>}
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
