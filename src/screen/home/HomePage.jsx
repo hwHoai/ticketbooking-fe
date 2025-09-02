@@ -1,6 +1,6 @@
 import Carousel from '../../components/common/carousel';
 import SearchForm from '../../components/common/SearchForm';
-import TicketSection from '../../components/common/TicketSection';
+import HomeTicketSection from '../../components/common/HomeTicketSection';
 import Header from '../../components/common/Header';
 
 export const HomePage = () => {
@@ -9,7 +9,7 @@ export const HomePage = () => {
       <Header />
       <SearchForm />
       <Carousel />
-      <TicketSection />
+      <HomeTicketSection />
     </div>
   );
 };
