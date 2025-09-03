@@ -161,7 +161,7 @@ const CommingSoonPage = () => {
   return (
     <>
       <Header />
-      <div className='from-project-100 to-project-200 flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-br p-4 text-center'>
+      <div className='from-project-100 to-project-200 flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-br p-4 pt-24 text-center'>
         {/* Coming Soon Title */}
         <div className='mb-8'>
           <h1 className='text-project-500 mb-4 text-4xl font-bold md:text-6xl'>Coming Soon!!</h1>

@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from './lib/redux/auth.slice';
 import { UserAuthenticationService } from './service/user/user.authentication.service';
 import { UserInfoService } from './service/user/user.info.service';
-import NotFound from './screen/NotFound';
 
 export const App = () => {
   const searchParams = new URLSearchParams(window.location.search);
@@ -80,7 +79,6 @@ export const App = () => {
           <Route key={i} {...route} />
         ))}
         {isAuthenticated ? privateRoute.map((route, i) => <Route key={i} {...route} />) : <></>}
-        <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

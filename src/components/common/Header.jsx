@@ -53,7 +53,7 @@ const Header = () => {
   }, [userName, userAvatar]);
 
   return (
-    <nav className='bg-project-300 text-3xl text-white'>
+    <nav className='bg-project-300 absolute top-0 left-0 z-50 w-full text-3xl text-white shadow-md'>
       <div className='container mx-auto flex items-center justify-between'>
         <div className='flex items-center space-x-10'>
           {/* Logo */}

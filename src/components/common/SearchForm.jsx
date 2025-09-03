@@ -4,6 +4,7 @@ import CustomDatePicker from './CustomDatePicker';
 import { locationOptions, typeOptions, timeOptions } from '../../constant/selectOptions';
 import selectStyles from '../../constant/selectStyles';
 import SearchTicket from './SearchTicket';
+import { Search } from 'lucide-react';
 
 const SearchForm = ({ className }) => {
   const [activeTab, setActiveTab] = useState('bus');
@@ -179,9 +180,9 @@ const SearchForm = ({ className }) => {
           <div className='flex h-12 w-full min-w-0 items-center xl:w-full 2xl:w-auto'>
             <button
               type='submit'
-              className='bg-project-400 hover:bg-project-300 w-full rounded-md px-6 py-3 text-white transition-colors'
+              className='bg-project-400 hover:bg-project-300 flex w-full items-center justify-center rounded-md px-4 py-3 text-white transition-colors hover:cursor-pointer'
             >
-              Find
+              <Search />
             </button>
           </div>
         </form>
