@@ -1,6 +1,10 @@
-export const ROUTE_PATH = {
+export const NAVIGATE_ROUTES = {
   HOME: '/',
-  PROFILE: {
-    USERNAME: '/profile/:userName'
-  }
+  BUS_TICKETS: '/bus_tickets',
+  CONCERT_TICKETS: '/concert_tickets',
+  EVENT_TICKETS: '/event_tickets'
+};
+
+export const TICKET_ROUTE = {
+  DETAIL: '/:ticketType/:id'
 };

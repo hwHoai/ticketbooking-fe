@@ -1,24 +1,17 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ticketInfoContext } from '../provider/ticketInfoProvider';
+import { tickets } from '../../data/tickets';
+import { ChevronUp } from 'lucide-react';
 
-const ChevronIcon = ({ open, color = '#000000' }) => (
-  <svg
-    width={20}
-    height={20}
-    className={`transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
-    fill='none'
-    viewBox='0 0 24 24'
-    aria-hidden='true'
-  >
-    <path d='M6 9l6 6 6-6' stroke={color} strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
-  </svg>
-);
-
-const Accordion = ({ ticket }) => {
+const Accordion = () => {
+  const { ticketId, ticketType } = useContext(ticketInfoContext);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isOrganizerOpen, setIsOrganizerOpen] = useState(false);
   const [isPolicyOpen, setIsPolicyOpen] = useState(false);
 
-  if (!ticket) return null;
+  const ticket = tickets.filter((t) => t.type === ticketType.split('_')[0]).find((t) => t.id === Number(ticketId));
+
+  if (!ticketId || !ticketType) return null;
 
   return (
     <div className='space-y-5'>
@@ -28,7 +21,7 @@ const Accordion = ({ ticket }) => {
           onClick={() => setIsAboutOpen((prev) => !prev)}
         >
           <span className='p-4'>About</span>
-          <ChevronIcon open={isAboutOpen} />
+          <ChevronUp className={`${isAboutOpen ? 'rotate-180' : ''} transition-transform duration-300`} />
         </button>
         <div
           className={`overflow-hidden transition-all duration-500 ease-in-out ${
@@ -45,7 +38,7 @@ const Accordion = ({ ticket }) => {
           onClick={() => setIsOrganizerOpen((prev) => !prev)}
         >
           <span className='p-4'>Organizer</span>
-          <ChevronIcon open={isOrganizerOpen} />
+          <ChevronUp className={`${isOrganizerOpen ? 'rotate-180' : ''} transition-transform duration-300`} />
         </button>
         <div
           className={`overflow-hidden transition-all duration-500 ease-in-out ${
@@ -62,7 +55,7 @@ const Accordion = ({ ticket }) => {
           onClick={() => setIsPolicyOpen((prev) => !prev)}
         >
           <span className='p-4'>Policy</span>
-          <ChevronIcon open={isPolicyOpen} />
+          <ChevronUp className={`${isPolicyOpen ? 'rotate-180' : ''} transition-transform duration-300`} />
         </button>
         <div
           className={`overflow-hidden transition-all duration-500 ease-in-out ${

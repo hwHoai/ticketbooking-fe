@@ -1,16 +1,20 @@
-// src/components/common/BookingCard.jsx
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { tickets } from '../../data/tickets';
+import { useContext } from 'react';
+import { ticketInfoContext } from '../provider/ticketInfoProvider';
 
-const BookingCard = ({ ticket, isDetailPage = false }) => {
-  const details = ticket.details || ticket;
+const BookingCard = () => {
+  const { ticketId, ticketType } = useContext(ticketInfoContext);
+  console.log(ticketId, ticketType);
+  const ticket = tickets.filter((t) => t.type === ticketType.split('_')[0]).find((t) => t.id === Number(ticketId));
+
   return (
     <div className='container mx-auto my-10 flex'>
       <div className='poster w-4xl'>
         <img
           src={ticket.image || ticket.poster || 'https://via.placeholder.com/400x300'}
           alt={ticket.name || 'Event Poster'}
-          className='h-100 w-full rounded-lg object-cover shadow-2xs'
+          className='h-100 w-full rounded-lg bg-gray-300 object-cover shadow-2xs'
         />
         <button className='my-5 h-15 w-full rounded-lg bg-amber-400 py-3 text-lg font-bold text-white transition-colors hover:bg-amber-300'>
           BOOK NOW

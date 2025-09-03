@@ -4,7 +4,7 @@ export class UserInfoService {
   static async getUserData(accessToken) {
     return request({
       method: 'GET',
-      url: `/user/1`,
+      url: `/user/info`,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`
