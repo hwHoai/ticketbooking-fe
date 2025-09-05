@@ -46,7 +46,7 @@ const SearchForm = ({ className }) => {
       origin: selectedValues.origin?.value || '',
       destination: selectedValues.destination?.value || '',
       location: selectedValues.location?.value || '',
-      tripType: tripType ? tripType.value : '', // sửa: lấy value từ object
+      tripType: tripType ? tripType.value : '',
       startDate: startDate,
       returnDate: tripType && tripType.value === 'Round-trip' ? returnDate : null,
       startTime: startTime,

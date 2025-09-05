@@ -3,10 +3,11 @@ import BookingCard from '../../components/common/BookingCard';
 import Accordion from '../../components/common/Accordion';
 import Header from '../../components/common/Header';
 import { ticketInfoContext } from '../../components/provider/ticketInfoProvider';
+//import RecommendedTicket from '../../components/common/RecommededTicket';
 
 export const TicketDetailPage = () => {
   const { id: ticketId, ticketType } = useParams();
-  if (!ticketType || !ticketId) return <div>Không tìm thấy vé!</div>;
+  if (!ticketType || !ticketId) return <div>Ticket not found</div>;
 
   return (
     <div className='min-h-screen bg-gray-100 p-20'>
