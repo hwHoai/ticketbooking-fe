@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
-import BookingCard from '../../components/common/BookingCard';
-import Accordion from '../../components/common/Accordion';
+import BookingCard from './components/BookingCard';
+import Accordion from './components/Accordion';
 import Header from '../../components/common/Header';
 import { ticketInfoContext } from '../../components/provider/ticketInfoProvider';
 //import RecommendedTicket from '../../components/common/RecommededTicket';

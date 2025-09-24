@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import { tickets } from '../../data/tickets';
+import { tickets } from '../../../data/tickets';
 import { useContext } from 'react';
-import { ticketInfoContext } from '../provider/ticketInfoProvider';
+import { ticketInfoContext } from '../../../components/provider/ticketInfoProvider';
 
 const BookingCard = () => {
   const { ticketId, ticketType } = useContext(ticketInfoContext);

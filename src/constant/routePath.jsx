@@ -6,5 +6,13 @@ export const NAVIGATE_ROUTES = {
 };
 
 export const TICKET_ROUTE = {
-  DETAIL: '/:ticketType/:id'
+  DETAIL: '/tickets/:ticketType/:id'
+};
+
+export const ACCOUNT = {
+  MANAGEMENT_PAGE: '/account/:id'
+};
+
+export const EVENT = {
+  CREATE: '/events/create'
 };
