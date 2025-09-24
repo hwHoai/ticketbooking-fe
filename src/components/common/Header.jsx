@@ -23,7 +23,7 @@ import { logout } from '../../lib/redux/auth.slice';
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
-  const { isAuthenticated, userName, userAvatar } = useSelector((state) => state.auth);
+  const { isAuthenticated, userId, userName, userAvatar } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -131,7 +131,7 @@ const Header = () => {
               {isAccountDropdownOpen && (
                 <div className='absolute left-[50%] z-50 flex w-64 translate-x-[-50%] flex-col rounded-lg bg-white px-2 py-2 text-sm text-black/85 shadow-sm'>
                   <Link
-                    to='/account'
+                    to={`/account/${userId}`}
                     onClick={closeDropdown}
                     className='flex flex-row items-center justify-start gap-2 rounded-t-lg px-4 py-2 hover:bg-gray-200'
                   >

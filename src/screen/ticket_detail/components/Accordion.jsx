@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
-import { ticketInfoContext } from '../provider/ticketInfoProvider';
-import { tickets } from '../../data/tickets';
+import { ticketInfoContext } from '../../../components/provider/ticketInfoProvider';
+import { tickets } from '../../../data/tickets';
 import { ChevronUp } from 'lucide-react';
 
 const Accordion = () => {

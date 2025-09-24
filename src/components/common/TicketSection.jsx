@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { busTickets, concertTickets, eventTickets } from '../../data/tickets';
 
+let tickets = [];
 const TicketSection = ({ title, link, linkText }) => {
-  let tickets = [];
   const navigate = useNavigate();
 
   // Sort each ticket array by id in descending order and take the top 6

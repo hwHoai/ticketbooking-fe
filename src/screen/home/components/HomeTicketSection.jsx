@@ -1,4 +1,4 @@
-import TicketSection from '../../components/common/TicketSection';
+import TicketSection from '../../../components/common/TicketSection';
 
 const HomeTicketSection = () => {
   return (
