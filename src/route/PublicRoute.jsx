@@ -2,7 +2,7 @@ import { NAVIGATE_ROUTES, TICKET_ROUTE } from '../constant/routePath';
 import CommingSoonPage from '../screen/CommingSoon';
 import { HomePage } from '../screen/home/HomePage';
 import NotFound from '../screen/NotFound';
-import { TicketDetailPage } from '../screen/ticket/TicketDetailPage';
+import { TicketDetailPage } from '../screen/ticket_detail/TicketDetailPage';
 
 export const publicRoute = [
   {

@@ -14,7 +14,7 @@ export const App = () => {
   const dispatch = useDispatch();
   const currentAccessToken = Cookie.getCookie('access_token');
   const auth0Code = searchParams.get('code');
-  const { isAuthenticated, accessToken, userName, userAvatar } = useSelector((state) => state.auth);
+  const { isAuthenticated, userId, userName, userAvatar } = useSelector((state) => state.auth);
 
   const handleAuthentication = useCallback(async (code) => {
     if (!code) {
@@ -36,11 +36,15 @@ export const App = () => {
   useEffect(() => {
     (async () => {
       if (currentAccessToken) {
-        if (isAuthenticated && accessToken && userName && userAvatar) {
+        if (isAuthenticated && userId && userName && userAvatar) {
           return;
         }
         await UserInfoService.getUserData(currentAccessToken)
-          .then((res) => ({ userName: res.data.name, userAvatar: res.data.picture, accessToken: currentAccessToken }))
+          .then((res) => ({
+            userName: res.data.name,
+            userAvatar: res.data.picture,
+            userId: res.data.sub.split('|')[1]
+          }))
           .then(async (userData) => {
             dispatch(login(userData));
           })

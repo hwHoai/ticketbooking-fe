@@ -5,21 +5,21 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: {
     isAuthenticated: false,
-    accessToken: '',
+    userId: '',
     userName: '',
     userAvatar: ''
   },
   reducers: {
     login: (state, action) => {
       state.isAuthenticated = true;
-      state.accessToken = action.payload.accessToken;
+      state.userId = action.payload.userId;
       state.userName = action.payload.userName || state.userName;
       state.userAvatar = action.payload.userAvatar || state.userAvatar;
     },
     logout: (state) => {
       Cookie.removeCookie('access_token', '/');
       state.isAuthenticated = false;
-      state.accessToken = '';
+      state.userId = '';
       state.userName = '';
       state.userAvatar = '';
     },
