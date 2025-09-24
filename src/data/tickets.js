@@ -1,5 +1,4 @@
 export const tickets = [
-  // Bus Tickets
   {
     id: 1,
     name: 'Vé xe khách Hà Nội - Hải Phòng',
@@ -66,18 +65,6 @@ export const tickets = [
     organizer: 'Nhà xe Phương Trang',
     policy: 'Đổi vé trước 24h, không hoàn tiền.'
   },
-  {
-    id: 7,
-    name: 'Vé xe khách Hà Nội - Sapa',
-    type: 'bus',
-    price: 250000,
-    description: 'Vé xe khách tuyến Hà Nội - Sapa, giường nằm.',
-    image: '/assets/bus-7.png',
-    about: 'Khám phá Sapa với xe chất lượng cao...',
-    organizer: 'Nhà xe Hà Sơn',
-    policy: 'Đổi vé trước 48h, không hoàn tiền.'
-  },
-  // Concert Tickets
   {
     id: 11,
     name: 'Vé concert BlackPink Hà Nội',
@@ -155,7 +142,6 @@ export const tickets = [
     organizer: 'Bích Phương Entertainment',
     policy: 'Không hoàn, không đổi.'
   },
-  // Event Tickets
   {
     id: 21,
     name: 'Vé sự kiện Tech Summit 2025',
@@ -232,10 +218,231 @@ export const tickets = [
     about: 'Trưng bày các tác phẩm nghệ thuật độc đáo...',
     organizer: 'Art Gallery VN',
     policy: 'Không hoàn, không đổi.'
+  },
+  {
+    id: 8,
+    name: 'Vé xe khách Sài Gòn - Đà Lạt',
+    type: 'bus',
+    price: 280000,
+    description: 'Vé xe khách tuyến Sài Gòn - Đà Lạt, giường nằm.',
+    image: '/assets/bus-8.png',
+    about: 'Hành trình đến thành phố ngàn hoa với xe tiện nghi...',
+    organizer: 'Nhà xe Thành Bưởi',
+    policy: 'Đổi vé trước 24h, không hoàn tiền.'
+  },
+  {
+    id: 9,
+    name: 'Vé xe khách Hà Nội - Quảng Ninh',
+    type: 'bus',
+    price: 200000,
+    description: 'Vé xe khách tuyến Hà Nội - Quảng Ninh, ghế ngồi.',
+    image: '/assets/bus-9.png',
+    about: 'Khám phá Vịnh Hạ Long với xe chất lượng...',
+    organizer: 'Nhà xe Kumho Samco',
+    policy: 'Đổi vé trước 24h, không hoàn tiền.'
+  },
+  {
+    id: 10,
+    name: 'Vé xe khách Cần Thơ - Rạch Giá',
+    type: 'bus',
+    price: 130000,
+    description: 'Vé xe khách tuyến Cần Thơ - Rạch Giá, ghế ngồi.',
+    image: '/assets/bus-10.png',
+    about: 'Hành trình ngắn, dịch vụ thân thiện...',
+    organizer: 'Nhà xe Phương Trang',
+    policy: 'Không đổi, không hoàn.'
+  },
+  {
+    id: 29,
+    name: 'Vé xe khách Nha Trang - Sài Gòn',
+    type: 'bus',
+    price: 250000,
+    description: 'Vé xe khách tuyến Nha Trang - Sài Gòn, giường nằm.',
+    image: '/assets/bus-12.png',
+    about: 'Hành trình dài với xe giường nằm cao cấp...',
+    organizer: 'Nhà xe Mai Linh',
+    policy: 'Đổi vé trước 48h, không hoàn tiền.'
+  },
+  {
+    id: 30,
+    name: 'Vé xe khách Hà Nội - Vinh',
+    type: 'bus',
+    price: 220000,
+    description: 'Vé xe khách tuyến Hà Nội - Vinh, giường nằm.',
+    image: '/assets/bus-13.png',
+    about: 'Xe tiện nghi, an toàn cho hành trình đến Vinh...',
+    organizer: 'Nhà xe Cúc Tùng',
+    policy: 'Đổi vé trước 24h, không hoàn tiền.'
+  },
+  {
+    id: 31,
+    name: 'Vé xe khách Đà Nẵng - Quy Nhơn',
+    type: 'bus',
+    price: 180000,
+    description: 'Vé xe khách tuyến Đà Nẵng - Quy Nhơn, ghế ngồi.',
+    image: '/assets/bus-14.png',
+    about: 'Hành trình ven biển đầy thú vị...',
+    organizer: 'Nhà xe Phương Trang',
+    policy: 'Không đổi, không hoàn.'
+  },
+  // New Concert Tickets (7 additional)
+  {
+    id: 18,
+    name: 'Vé concert Charlie Puth TP.HCM',
+    type: 'concert',
+    price: 2800000,
+    description: 'Concert Charlie Puth tại SVĐ Phú Thọ.',
+    image: '/assets/concert-8.png',
+    about: 'Sự kiện âm nhạc quốc tế đầy cảm xúc...',
+    organizer: 'Universal Music',
+    policy: 'Không hoàn, không đổi.'
+  },
+  {
+    id: 19,
+    name: 'Vé concert Trúc Nhân',
+    type: 'concert',
+    price: 1000000,
+    description: 'Concert Trúc Nhân tại Hà Nội.',
+    image: '/assets/concert-9.png',
+    about: 'Âm nhạc trẻ trung, đầy năng lượng...',
+    organizer: 'Trúc Nhân Entertainment',
+    policy: 'Không hoàn, không đổi.'
+  },
+  {
+    id: 20,
+    name: 'Vé concert Taylor Swift World Tour',
+    type: 'concert',
+    price: 4000000,
+    description: 'Concert Taylor Swift tại SVĐ Quốc gia.',
+    image: '/assets/concert-10.png',
+    about: 'Sự kiện âm nhạc toàn cầu đỉnh cao...',
+    organizer: 'Big Machine Entertainment',
+    policy: 'Không hoàn, không đổi.'
+  },
+  {
+    id: 32,
+    name: 'Vé concert Đức Phúc',
+    type: 'concert',
+    price: 850000,
+    description: 'Concert Đức Phúc tại Đà Nẵng.',
+    image: '/assets/concert-11.png',
+    about: 'Những bản tình ca ngọt ngào...',
+    organizer: 'Đức Phúc Production',
+    policy: 'Không hoàn, không đổi.'
+  },
+  {
+    id: 33,
+    name: 'Vé concert Maroon 5',
+    type: 'concert',
+    price: 3200000,
+    description: 'Concert Maroon 5 tại TP.HCM.',
+    image: '/assets/concert-12.png',
+    about: 'Sự kiện âm nhạc quốc tế sôi động...',
+    organizer: 'Interscope Records',
+    policy: 'Không hoàn, không đổi.'
+  },
+  {
+    id: 34,
+    name: 'Vé concert Vũ Cát Tường',
+    type: 'concert',
+    price: 1100000,
+    description: 'Concert Vũ Cát Tường tại Hà Nội.',
+    image: '/assets/concert-13.png',
+    about: 'Âm nhạc sâu sắc, cảm xúc...',
+    organizer: 'Vũ Cát Tường Production',
+    policy: 'Không hoàn, không đổi.'
+  },
+  {
+    id: 35,
+    name: 'Vé concert Ed Sheeran',
+    type: 'concert',
+    price: 3800000,
+    description: 'Concert Ed Sheeran tại SVĐ Mỹ Đình.',
+    image: '/assets/concert-14.png',
+    about: 'Giọng ca quốc tế với những bản hit nổi tiếng...',
+    organizer: 'Atlantic Records',
+    policy: 'Không hoàn, không đổi.'
+  },
+  // New Event Tickets (6 additional)
+  {
+    id: 36,
+    name: 'Vé triển lãm Công nghệ 5G',
+    type: 'event',
+    price: 350000,
+    description: 'Triển lãm công nghệ 5G tại TP.HCM.',
+    image: '/assets/event-8.png',
+    about: 'Khám phá công nghệ mạng 5G tiên tiến...',
+    organizer: 'Tech Expo VN',
+    policy: 'Chuyển nhượng được, không hoàn tiền.'
+  },
+  {
+    id: 37,
+    name: 'Vé hội thảo Fintech 2025',
+    type: 'event',
+    price: 700000,
+    description: 'Hội thảo công nghệ tài chính tại Hà Nội.',
+    image: '/assets/event-9.png',
+    about: 'Cập nhật xu hướng fintech mới nhất...',
+    organizer: 'Fintech Vietnam',
+    policy: 'Không hoàn tiền, chuyển nhượng trước 5 ngày.'
+  },
+  {
+    id: 38,
+    name: 'Vé sự kiện Food Festival 2025',
+    type: 'event',
+    price: 200000,
+    description: 'Lễ hội ẩm thực tại Đà Nẵng.',
+    image: '/assets/event-10.png',
+    about: 'Thưởng thức các món ăn đặc sắc từ khắp nơi...',
+    organizer: 'Vietnam Food Association',
+    policy: 'Không hoàn, không đổi.'
+  },
+  {
+    id: 39,
+    name: 'Vé hội chợ Sách Quốc tế',
+    type: 'event',
+    price: 100000,
+    description: 'Hội chợ sách tại TP.HCM.',
+    image: '/assets/event-11.png',
+    about: 'Khám phá thế giới sách phong phú...',
+    organizer: 'Vietnam Book Fair',
+    policy: 'Không hoàn, không đổi.'
+  },
+  {
+    id: 40,
+    name: 'Vé triển lãm Thời trang Việt Nam',
+    type: 'event',
+    price: 250000,
+    description: 'Triển lãm thời trang tại Hà Nội.',
+    image: '/assets/event-12.png',
+    about: 'Trưng bày các thiết kế thời trang độc đáo...',
+    organizer: 'Vietnam Fashion Week',
+    policy: 'Không hoàn, không đổi.'
+  },
+  {
+    id: 41,
+    name: 'Vé sự kiện Green Energy Expo',
+    type: 'event',
+    price: 400000,
+    description: 'Triển lãm năng lượng xanh tại Đà Nẵng.',
+    image: '/assets/event-13.png',
+    about: 'Khám phá các giải pháp năng lượng bền vững...',
+    organizer: 'Green Energy VN',
+    policy: 'Chuyển nhượng được, không hoàn tiền.'
+  },
+  {
+    id: 80,
+    name: 'Vé xe khách Hà Nội - Hải Phòng',
+    type: 'bus',
+    price: 120000,
+    description: 'Vé xe khách tuyến Hà Nội - Hải Phòng, ghế ngồi mềm.',
+    image: '/assets/bus-1.png',
+    about: 'Chuyến đi nhanh chóng và tiện lợi...',
+    organizer: 'Nhà xe Hoàng Long',
+    policy: 'Đổi vé trước 24h, không hoàn tiền.'
   }
 ];
 
-// Phân loại theo type
 export const busTickets = tickets.filter((t) => t.type === 'bus');
 export const concertTickets = tickets.filter((t) => t.type === 'concert');
 export const eventTickets = tickets.filter((t) => t.type === 'event');

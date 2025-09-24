@@ -1,4 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import TicketGrid from './TicketGrid';
 import { busTickets, concertTickets, eventTickets } from '../../data/tickets';
 
 let tickets = [];
@@ -7,10 +8,9 @@ const TicketSection = ({ title, link, linkText }) => {
 
   // Sort each ticket array by id in descending order and take the top 6
   const latestBusTickets = [...busTickets].sort((a, b) => b.id - a.id).slice(0, 6);
-
   const latestConcertTickets = [...concertTickets].sort((a, b) => b.id - a.id).slice(0, 6);
-
   const latestEventTickets = [...eventTickets].sort((a, b) => b.id - a.id).slice(0, 6);
+
   switch (title) {
     case 'BUS TICKETS':
       tickets = latestBusTickets;
@@ -34,19 +34,7 @@ const TicketSection = ({ title, link, linkText }) => {
           {linkText}
         </a>
       </div>
-      <div className='grid grid-cols-3 gap-x-5 gap-y-10'>
-        {tickets.map((ticket) => (
-          <Link
-            to={`/ticket/${ticket.id}`}
-            key={ticket.id}
-            className='flex cursor-pointer flex-col items-center justify-center rounded p-4 transition-colors'
-          >
-            <img src={ticket.image} alt={ticket.name} className='mb-2 h-64 w-full rounded object-cover' />
-            <div className='font-bold'>{ticket.name}</div>
-            <div className='font-semibold text-amber-600'>From {ticket.price.toLocaleString()}đ</div>
-          </Link>
-        ))}
-      </div>
+      <TicketGrid tickets={tickets} />
     </div>
   );
 };
