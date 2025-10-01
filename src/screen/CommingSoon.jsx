@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { GamepadIcon, Home, RotateCcw, Trophy } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
-import Header from '../components/common/Header';
+import Header from '../components/layout/Header';
 
 const CommingSoonPage = () => {
   // Snake Game State

@@ -1,6 +1,5 @@
-import { Search } from 'lucide-react';
-import Header from '../../components/common/Header';
-import TicketList from './TicketList';
+import Header from '../../components/layout/Header';
+import TicketList from './components/TicketList';
 import SearchForm from '../../components/common/SearchForm';
 
 export const TicketListPage = () => {

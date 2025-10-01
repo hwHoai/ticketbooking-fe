@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Cookie } from '../../util/cookie,util';
+import { Cookie } from '../../util/cookie.util';
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../../constant/common';
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -17,7 +18,8 @@ export const authSlice = createSlice({
       state.userAvatar = action.payload.userAvatar || state.userAvatar;
     },
     logout: (state) => {
-      Cookie.removeCookie('access_token', '/');
+      Cookie.removeCookie(ACCESS_TOKEN_KEY, '/');
+      Cookie.removeCookie(REFRESH_TOKEN_KEY, '/');
       state.isAuthenticated = false;
       state.userId = '';
       state.userName = '';

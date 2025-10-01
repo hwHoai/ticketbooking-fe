@@ -2,79 +2,76 @@ import { Routes, Route, BrowserRouter } from 'react-router';
 import { privateRoute } from './route/PrivateRoute';
 import { publicRoute } from './route/PublicRoute';
 import { logger } from './util/logger';
-import { Cookie } from './util/cookie,util';
-import { useCallback, useEffect } from 'react';
+import { Cookie } from './util/cookie.util';
+import { useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from './lib/redux/auth.slice';
 import { UserAuthenticationService } from './service/user/user.authentication.service';
 import { UserInfoService } from './service/user/user.info.service';
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './constant/common';
+import { jwtDecode } from 'jwt-decode';
+import NotFound from './screen/NotFound';
 
 export const App = () => {
-  const searchParams = new URLSearchParams(window.location.search);
+  const accessToken = Cookie.get(ACCESS_TOKEN_KEY);
+  const refreshToken = Cookie.get(REFRESH_TOKEN_KEY);
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const currentAccessToken = Cookie.getCookie('access_token');
-  const auth0Code = searchParams.get('code');
-  const { isAuthenticated, userId, userName, userAvatar } = useSelector((state) => state.auth);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleAuthentication = useCallback(async (code) => {
-    if (!code) {
-      logger.error('No authentication code found');
+  const renewAccessToken = async () => {
+    setIsLoading(true);
+    try {
+      const {
+        access_token: newAccessToken,
+        expires_in,
+        id_token
+      } = await UserAuthenticationService.oauthRefreshToken(refreshToken).then((res) => res.data);
+      console.log('newAccessToken', newAccessToken);
+      Cookie.set(ACCESS_TOKEN_KEY, newAccessToken, new Date(Date.now() + expires_in * 1000).toUTCString());
+      const userInfo = jwtDecode(id_token);
+      dispatch(
+        login({
+          userId: userInfo.sub.split('|')[1],
+          userName: userInfo.given_name,
+          userAvatar: userInfo.picture
+        })
+      );
+    } catch (error) {
+      logger.error('Error during token refresh:', error);
+      return;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchUserInfo = async () => {
+    setIsLoading(true);
+    try {
+      const { given_name, picture, sub } = await UserInfoService.getUserData(accessToken).then((res) => res.data);
+      dispatch(
+        login({
+          userId: sub.split('|')[1],
+          userName: given_name,
+          userAvatar: picture
+        })
+      );
+    } catch (error) {
+      logger.error('Error fetching user info:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useLayoutEffect(() => {
+    const isAuthenticated = !!refreshToken;
+    if (!isAuthenticated) return;
+    if (!accessToken) {
+      renewAccessToken();
       return;
     }
-    const tokenResponse = await UserAuthenticationService.oauthGetAccessToken(code);
-    const accessToken = tokenResponse.data.access_token;
-    if (!accessToken) {
-      throw new Error('No access token found');
-    }
-
-    const tokenExpireTime = new Date(Date.now() + (tokenResponse.data.expires_in - 5 * 60) * 1000).toUTCString(); //expires 5 minutes early
-    logger.info(tokenExpireTime);
-    Cookie.setCookie('access_token', accessToken, tokenExpireTime, '/');
-    return accessToken;
+    fetchUserInfo();
   }, []);
-
-  useEffect(() => {
-    (async () => {
-      if (currentAccessToken) {
-        if (isAuthenticated && userId && userName && userAvatar) {
-          return;
-        }
-        await UserInfoService.getUserData(currentAccessToken)
-          .then((res) => ({
-            userName: res.data.name,
-            userAvatar: res.data.picture,
-            userId: res.data.sub.split('|')[1]
-          }))
-          .then(async (userData) => {
-            dispatch(login(userData));
-          })
-          .catch((err) => {
-            logger.error(err);
-          });
-        return;
-      }
-
-      if (auth0Code) {
-        await handleAuthentication(auth0Code)
-          .then(async (accessToken) => {
-            const userDataResponse = await UserInfoService.getUserData(accessToken);
-            return {
-              userAvatar: userDataResponse.data.picture,
-              userName: userDataResponse.data.name,
-              accessToken
-            };
-          })
-          .then(async (userData) => {
-            dispatch(login(userData));
-          })
-          .catch((err) => {
-            UserAuthenticationService.login();
-            logger.error(err);
-          });
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentAccessToken, auth0Code]);
 
   return (
     <BrowserRouter>
@@ -83,6 +80,7 @@ export const App = () => {
           <Route key={i} {...route} />
         ))}
         {isAuthenticated ? privateRoute.map((route, i) => <Route key={i} {...route} />) : <></>}
+        {!isLoading && <Route path='*' element={<NotFound />} />}
       </Routes>
     </BrowserRouter>
   );

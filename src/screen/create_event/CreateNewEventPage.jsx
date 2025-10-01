@@ -1,18 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/common/Header';
+import Header from '../../components/layout/Header';
 import { Image as ImageIcon, Calendar, Save, Eye, ArrowLeft, FileText, Map } from 'lucide-react';
 import { BasicInfoForm } from './components/forms/BasicInfoForm';
 import { DetailForm } from './components/forms/DetailForm';
 import { ImageForm } from './components/forms/ImageForm';
 import { LocationAndMapForm } from './components/forms/LocationAndMapForm';
-import { UserAuthenticationService } from '../../service/user/user.authentication.service';
 import { FormProvider, useForm } from 'react-hook-form';
 
 export const CreateNewEventPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector((state) => state.auth);
   const eventData = useSelector((state) => state.eventForm);
   const [activeTab, setActiveTab] = useState('basic');
   const [errors, setErrors] = useState({});
@@ -28,12 +26,6 @@ export const CreateNewEventPage = () => {
     { id: 'location', label: 'Location & Map', icon: Map },
     { id: 'details', label: 'Details', icon: Calendar }
   ];
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      UserAuthenticationService.login();
-    }
-  }, [isAuthenticated, navigate]);
 
   const validateCurrentTab = () => {
     const newErrors = {};
@@ -199,10 +191,6 @@ export const CreateNewEventPage = () => {
         return <BasicInfoForm errors={errors} />;
     }
   };
-
-  if (!isAuthenticated) {
-    return null;
-  }
 
   const currentTabIndex = tabs.findIndex((tab) => tab.id === activeTab);
 

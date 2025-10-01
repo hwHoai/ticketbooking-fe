@@ -1,9 +1,9 @@
 import { NAVIGATE_ROUTES, TICKET_ROUTE } from '../constant/routePath';
 import CommingSoonPage from '../screen/CommingSoon';
 import { HomePage } from '../screen/home/HomePage';
-import NotFound from '../screen/NotFound';
-import { TicketListPage } from '../screen/ticket/TicketListPage';
+import { TicketListPage } from '../screen/ticket_list/TicketListPage';
 import { TicketDetailPage } from '../screen/ticket_detail/TicketDetailPage';
+import { AuthCallback } from '../screen/Auth-Callback';
 
 export const publicRoute = [
   {
@@ -33,13 +33,13 @@ export const publicRoute = [
     element: <TicketDetailPage />
   },
   {
-    id: 'not-found',
-    path: '*',
-    element: <NotFound />
-  },
-  {
     id: 'all_tickets',
     path: '/all_tickets',
     element: <TicketListPage />
+  },
+  {
+    id: 'auth-callback',
+    path: '/auth_callback',
+    element: <AuthCallback />
   }
 ];

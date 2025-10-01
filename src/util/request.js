@@ -14,8 +14,8 @@ const transformResponseLog = (response) => {
   };
 };
 
-export const request = async (option, data = null) => {
-  const { method, url, headers } = option;
+export const request = async (option) => {
+  const { method, url, headers, data } = option;
 
   try {
     const response = await axiosInstance({

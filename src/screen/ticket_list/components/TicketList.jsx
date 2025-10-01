@@ -1,13 +1,12 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
-import Pagination from '../../components/common/Pagination';
-import TicketGrid from '../../components/common/TicketGrid';
-import { busTickets, concertTickets, eventTickets } from '../../data/tickets';
+import Pagination from '../../../components/common/Pagination';
+import TicketGrid from '../../../components/common/TicketGrid';
+import { busTickets, concertTickets, eventTickets } from '../../../data/tickets';
 
 const ticketsPerPage = 30;
 
 const TicketList = ({ title = 'ALL TICKETS' }) => {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
 
@@ -33,12 +32,6 @@ const TicketList = ({ title = 'ALL TICKETS' }) => {
     const startIdx = (currentPage - 1) * ticketsPerPage;
     setTickets(allTickets.slice(startIdx, startIdx + ticketsPerPage));
   }, [currentPage, allTickets]);
-
-  useEffect(() => {
-    if (title && !['ALL TICKETS', 'BUS TICKETS', 'CONCERT TICKETS', 'EVENT TICKETS'].includes(title)) {
-      navigate('/*');
-    }
-  }, [title, navigate]);
 
   const handlePageChange = (newPage) => {
     if (newPage !== currentPage && newPage >= 1 && newPage <= totalPages) {

@@ -1,7 +1,7 @@
 import Carousel from './components/Carousel';
 import SearchForm from '../../components/common/SearchForm';
 import HomeTicketSection from './components/HomeTicketSection';
-import Header from '../../components/common/Header';
+import Header from '../../components/layout/Header';
 
 export const HomePage = () => {
   return (
