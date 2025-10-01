@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Header from '../../components/common/Header';
+import Header from '../../components/layout/Header';
 import { User, Shield, Bell, CreditCard, CalendarDays } from 'lucide-react';
 import { BillingTab } from './components/BillingTab';
 import { ProfileTab } from './components/ProfileTab';
 import { SecurityTab } from './components/SecurityTab';
 import { NotificationTab } from './components/NotificationTab';
 import { CreateEventTab } from './components/CreateEventTab';
+import { UserAuthenticationService } from '../../service/user/user.authentication.service';
+import { Cookie } from '../../util/cookie.util';
+import { REFRESH_TOKEN_KEY } from '../../constant/common';
 
 export const AccountPage = () => {
-  const { userName, userAvatar, isAuthenticated } = useSelector((state) => state.auth);
+  const { userName, userAvatar } = useSelector((state) => state.auth);
   const [activeTab, setActiveTab] = useState('profile');
 
   const tabs = [
@@ -37,17 +40,6 @@ export const AccountPage = () => {
     }
   };
 
-  if (!isAuthenticated) {
-    return (
-      <div className='flex min-h-screen items-center justify-center bg-gray-100'>
-        <div className='text-center'>
-          <h2 className='mb-4 text-2xl font-semibold text-gray-800'>Access Denied</h2>
-          <p className='text-gray-600'>Please log in to access your account.</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className='min-h-screen bg-gray-200 p-20'>
       <Header />
@@ -63,6 +55,7 @@ export const AccountPage = () => {
               onError={(e) => {
                 e.currentTarget.src = '../../../assets/img/default_user.png';
               }}
+              referrerPolicy='no-referrer'
             />
             <div>
               <h1 className='text-2xl font-bold text-gray-800'>{userName}</h1>

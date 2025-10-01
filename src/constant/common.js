@@ -6,3 +6,6 @@ export const DRAW_MAP_TOOLS = {
   CANCEL: 'cancel',
   DONE: 'done'
 };
+
+export const ACCESS_TOKEN_KEY = 's_id'; // Session ID
+export const REFRESH_TOKEN_KEY = 'rt_id'; // Refresh Token ID

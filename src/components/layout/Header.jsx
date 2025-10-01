@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { UserAuthenticationService } from '../../service/user/user.authentication.service';
 import {
@@ -10,7 +10,6 @@ import {
   History,
   Home,
   Info,
-  LoaderCircle,
   LogOut,
   MoveRight,
   Search,
@@ -26,10 +25,10 @@ const Header = () => {
   const { isAuthenticated, userId, userName, userAvatar } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   const handleLogIn = useCallback(async () => {
-    setLoading(true);
+    // setLoading(true);
     await UserAuthenticationService.login();
   }, []);
 
@@ -41,16 +40,17 @@ const Header = () => {
     setIsAccountDropdownOpen(false);
   }, []);
 
-  useEffect(() => {
-    if (isAuthenticated && userName && userAvatar) {
-      setLoading(false);
-      return;
-    }
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userName, userAvatar]);
+  // useEffect(() => {
+  //   if (isAuthenticated && userName && userAvatar) {
+  //     setLoading(false);
+  //     return;
+  //   }
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 3000);
+  //   return () => clearTimeout();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [userName, userAvatar]);
 
   return (
     <nav className='bg-project-300 absolute top-0 left-0 z-50 w-full text-3xl text-white shadow-md'>
@@ -155,9 +155,8 @@ const Header = () => {
                   <button
                     className='flex flex-row items-center justify-start gap-2 px-4 py-2 text-left hover:bg-gray-200'
                     onClick={() => {
-                      dispatch(logout());
+                      UserAuthenticationService.logout();
                       closeDropdown();
-                      navigate('/');
                     }}
                   >
                     <LogOut size={20} />
@@ -186,7 +185,8 @@ const Header = () => {
                 onClick={handleLogIn}
                 className='hover:bg-project-200 flex items-center rounded px-3 py-2 transition-all duration-200 hover:scale-118 hover:cursor-pointer'
               >
-                {loading ? <LoaderCircle className='h-6 w-6 animate-spin' /> : 'Log In'}
+                {/* {loading ? <LoaderCircle className='h-6 w-6 animate-spin' /> : 'Log In'} */}
+                Log In
               </button>
             </div>
           )}

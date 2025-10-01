@@ -26,7 +26,7 @@ export const ProfileTab = () => {
       ...prev,
       name: userName || ''
     }));
-  }, [isAuthenticated, userName, id]);
+  }, [id]);
   const handleSave = () => {
     // TODO: Implement save functionality with API call
     console.log('Saving user info:', userInfo);
