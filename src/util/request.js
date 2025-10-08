@@ -1,7 +1,7 @@
 import { axiosInstance } from '../config/axios.config';
 import { logger } from './logger';
 
-const API_ENDPOINT_URL = import.meta.env.VITE_API_ENDPOINT_URL || 'http://localhost:8081/api/v1';
+const API_ENDPOINT_URL = import.meta.env.VITE_API_ENDPOINT_URL || 'http://localhost:8080/api/v1';
 
 const transformResponseLog = (response) => {
   return {

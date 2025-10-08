@@ -13,6 +13,7 @@ export const LocationAndMapForm = ({ errors }) => {
   const [scale, setScale] = useState(1);
   // Drawing states
   const [isDrawing, setIsDrawing] = useState(false);
+  const [showDrawingControls, setShowDrawingControls] = useState(false); // Control Cancel/Done buttons visibility
   const [currentPoint, setCurrentPoint] = useState([]);
   const [currentTool, setCurrentTool] = useState('');
   const [shapeData, setShapeData] = useState([{ type: '', points: [] }]);
@@ -49,7 +50,16 @@ export const LocationAndMapForm = ({ errors }) => {
     return { x: actualX, y: actualY };
   };
 
+  // Hàm xóa hình đã lưu tại chỉ số cụ thể
+  const handleEraseShape = (index) => {
+    setShapeStrings((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const handleMouseDown = (e) => {
+    if (currentTool === DRAW_MAP_TOOLS.ERASER) {
+      return;
+    }
+
     if (!isDrawing) return;
     const { x, y } = getMousePosition(e);
     console.log('Mouse Down at:', x, y);
@@ -69,11 +79,14 @@ export const LocationAndMapForm = ({ errors }) => {
 
     const isEnded = Math.pow(x - shapeData[0]?.points[0], 2) + Math.pow(y - shapeData[0]?.points[1], 2) < 10;
     if (isEnded) {
-      setIsDrawing(false);
-      setCurrentTool(DRAW_MAP_TOOLS.MOVE_TOOL);
+      // Do not save shape to shapeStrings here; wait for "Done" button
       setCurrentPoint([]);
       setTempLinePoints([]);
-      setShapeData(updatedShapeData);
+      setShapeData(updatedShapeData); // Keep shapeData for potential saving
+      setLines(parserSVGDrawData(updatedShapeData) + 'Z');
+      setIsDrawing(false);
+      setCurrentTool(DRAW_MAP_TOOLS.MOVE_TOOL);
+      setShowDrawingControls(true); // Keep Cancel/Done buttons visible
       return;
     }
     console.log('shapeData on mouse down:', parserSVGDrawData(updatedShapeData));
@@ -108,32 +121,44 @@ export const LocationAndMapForm = ({ errors }) => {
 
   const handleChangeTool = (tool) => {
     if (tool === DRAW_MAP_TOOLS.CANCEL) {
-      setIsDrawing(false);
-      setCurrentTool('');
       setCurrentPoint([]);
       setTempLinePoints([]);
       setLines('');
       setShapeData([{ type: '', points: [] }]);
-      return;
-    }
-    if (tool === currentTool) {
+      setIsDrawing(false);
+      setShowDrawingControls(false); // Hide Cancel/Done buttons
+      setCurrentTool('');
       return;
     }
 
     if (tool === DRAW_MAP_TOOLS.DONE) {
-      const shapeStr = parserSVGDrawData(shapeData) + 'Z';
-      setShapeStrings([...shapeStrings, shapeStr]);
-      handleChangeTool(DRAW_MAP_TOOLS.CANCEL);
+      if (shapeData[0].points.length > 0) {
+        const shapeStr = parserSVGDrawData(shapeData) + 'Z';
+        setShapeStrings([...shapeStrings, shapeStr]);
+      }
+      setCurrentPoint([]);
+      setTempLinePoints([]);
+      setLines('');
+      setShapeData([{ type: '', points: [] }]);
+      setIsDrawing(false);
+      setShowDrawingControls(false); // Hide Cancel/Done buttons
+      setCurrentTool('');
       return;
     }
 
-    if (shapeData.some((shape) => shape.points.length === 0)) setShapeData([...shapeData.slice(0, -1)]);
+    if (tool === currentTool) {
+      return;
+    }
+
+    if (shapeData.some((shape) => shape.points.length === 0)) {
+      setShapeData([...shapeData.slice(0, -1)]);
+    }
     setIsDrawing(true);
+    setShowDrawingControls(true); // Show Cancel/Done buttons when drawing starts
     setCurrentTool(tool);
   };
 
   const handleDragBound = (shapeIndex, pointIndex, pos) => {
-    // Transform the position to account for stage offset and scale
     const stagePos = {
       x: stageRef.current.x(),
       y: stageRef.current.y()
@@ -184,7 +209,6 @@ export const LocationAndMapForm = ({ errors }) => {
       <div>
         <h3 className='mb-4 text-lg font-medium text-gray-900'>Location & Venue Information</h3>
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-2'>
-          {/* Venue */}
           <div>
             <label className='mb-2 block text-sm font-medium text-gray-700'>
               <MapPin size={16} className='mr-2 inline' />
@@ -201,7 +225,6 @@ export const LocationAndMapForm = ({ errors }) => {
             {errors.venue && <p className='mt-1 text-sm text-red-600'>{errors.venue}</p>}
           </div>
 
-          {/* Capacity */}
           <div>
             <label className='mb-2 block text-sm font-medium text-gray-700'>
               <Users size={16} className='mr-2 inline' />
@@ -218,7 +241,6 @@ export const LocationAndMapForm = ({ errors }) => {
             />
           </div>
 
-          {/* Address */}
           <div className='md:col-span-2'>
             <label className='mb-2 block text-sm font-medium text-gray-700'>
               <MapPin size={16} className='mr-2 inline' />
@@ -236,27 +258,42 @@ export const LocationAndMapForm = ({ errors }) => {
           </div>
         </div>
 
-        {/* Map Drawing Section */}
         <div>
           <h4 className='text-md mb-4 font-medium text-gray-900'>Event Area Map</h4>
           <div className='h-128 rounded-lg border-2 border-gray-300 p-4'>
             {mapImg ? (
               <div className='flex h-full w-full flex-col gap-2'>
                 <div className='flex h-14 flex-row items-center justify-start gap-2 rounded-2xl border-2 border-gray-300 bg-white px-4'>
-                  {Array.from(Object.values(DRAW_MAP_TOOLS)).map((tool, i) => (
-                    <div
-                      key={i}
-                      className='hover:bg-project-100 relative flex items-center rounded-lg p-2 hover:cursor-pointer'
-                      onClick={() => handleChangeTool(tool)}
-                    >
-                      {tool === DRAW_MAP_TOOLS.STRAIGHT_LINE && <PencilLineIcon />}
-                      {tool === DRAW_MAP_TOOLS.CURVED_LINE && <SplineIcon />}
-                      {tool === DRAW_MAP_TOOLS.MOVE_TOOL && <HandIcon />}
-                      {tool === DRAW_MAP_TOOLS.ERASER && <EraserIcon />}
-                      {isDrawing && tool === DRAW_MAP_TOOLS.CANCEL ? <XIcon /> : null}
-                      {isDrawing && tool === DRAW_MAP_TOOLS.DONE ? <CheckIcon /> : null}
-                    </div>
-                  ))}
+                  {Array.from(Object.values(DRAW_MAP_TOOLS))
+                    .filter((tool) => tool !== DRAW_MAP_TOOLS.CANCEL && tool !== DRAW_MAP_TOOLS.DONE)
+                    .map((tool, i) => (
+                      <div
+                        key={i}
+                        className='hover:bg-project-100 relative flex items-center rounded-lg p-2 hover:cursor-pointer'
+                        onClick={() => handleChangeTool(tool)}
+                      >
+                        {tool === DRAW_MAP_TOOLS.STRAIGHT_LINE && <PencilLineIcon />}
+                        {tool === DRAW_MAP_TOOLS.CURVED_LINE && <SplineIcon />}
+                        {tool === DRAW_MAP_TOOLS.MOVE_TOOL && <HandIcon />}
+                        {tool === DRAW_MAP_TOOLS.ERASER && <EraserIcon />}
+                      </div>
+                    ))}
+                  {showDrawingControls && (
+                    <>
+                      <div
+                        className='hover:bg-project-100 relative flex items-center rounded-lg p-2 hover:cursor-pointer'
+                        onClick={() => handleChangeTool(DRAW_MAP_TOOLS.CANCEL)}
+                      >
+                        <XIcon />
+                      </div>
+                      <div
+                        className='hover:bg-project-100 relative flex items-center rounded-lg p-2 hover:cursor-pointer'
+                        onClick={() => handleChangeTool(DRAW_MAP_TOOLS.DONE)}
+                      >
+                        <CheckIcon />
+                      </div>
+                    </>
+                  )}
                 </div>
                 <div ref={ref} className='h-full w-full overflow-hidden rounded-2xl'>
                   <Stage
@@ -278,26 +315,34 @@ export const LocationAndMapForm = ({ errors }) => {
                     <Layer>
                       <Image image={mapImg} x={0} y={0} width={width} height={height} />
 
-                      {/* 1. Background/completed shapes first */}
                       {shapeStrings.length > 0 &&
                         shapeStrings.map((shapeStr, index) => (
-                          <Path key={index} data={shapeStr} fill='green' opacity={0.4} strokeWidth={4} stroke='red' />
+                          <Path
+                            key={index}
+                            data={shapeStr}
+                            fill='green'
+                            opacity={0.4}
+                            strokeWidth={4}
+                            stroke='red'
+                            onMouseDown={(e) => {
+                              if (currentTool === DRAW_MAP_TOOLS.ERASER) {
+                                handleEraseShape(index);
+                                e.cancelBubble = true;
+                              }
+                            }}
+                          />
                         ))}
 
-                      {/* 2. Current drawing path */}
                       {lines && <Path data={lines} stroke='red' fill='green' strokeWidth={2} />}
 
-                      {/* 3. Temporary line */}
                       {currentPoint && tempLinePoints.length === 4 && (
                         <Line points={tempLinePoints} stroke='orange' strokeWidth={2} closed={false} dash={[4, 4]} />
                       )}
 
-                      {/* 4. Current point indicator */}
                       {currentPoint.length > 0 && (
                         <Circle x={currentPoint[0]} y={currentPoint[1]} radius={5} fill='orange' />
                       )}
 
-                      {/* 5. Draggable circles LAST (on top of everything) */}
                       {shapeData.map((shape, shapeIndex) =>
                         Array.from({ length: Math.floor(shape.points.length / 2) }, (_, pointIndex) => (
                           <Circle
