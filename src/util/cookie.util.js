@@ -1,9 +1,13 @@
-export class CookieService {
-  static setCookie = (name, value = '', expire, path = '/') => {
+export class Cookie {
+  static set = (name, value = '', expire, path = '/') => {
+    if (!value) {
+      console.warn(`Cookie value for ${name} is empty. Not setting cookie.`);
+      return;
+    }
     document.cookie = `${name}=${value}; expires=${expire}; path=${path}`;
   };
 
-  static getCookie = (name) => {
+  static get = (name) => {
     const cookies = document.cookie.split(';');
     for (const cookie of cookies) {
       const [cookieName, cookieValue] = cookie.split('=').map((c) => c.trim());

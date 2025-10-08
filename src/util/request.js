@@ -1,7 +1,7 @@
 import { axiosInstance } from '../config/axios.config';
 import { logger } from './logger';
 
-const API_ENDPOINT_URL = import.meta.env.VITE_API_ENDPOINT_URL || 'http://localhost:8081/api/v1';
+const API_ENDPOINT_URL = import.meta.env.VITE_API_ENDPOINT_URL || 'http://localhost:8080/api/v1';
 
 const transformResponseLog = (response) => {
   return {
@@ -14,14 +14,14 @@ const transformResponseLog = (response) => {
   };
 };
 
-export const request = async (option, data = null) => {
-  const { method, url, header } = option;
+export const request = async (option) => {
+  const { method, url, headers, data } = option;
 
   try {
     const response = await axiosInstance({
       method: method || 'GET',
       url: API_ENDPOINT_URL + url,
-      headers: header || {},
+      headers: headers || {},
       data: data || null
     });
 
@@ -31,7 +31,7 @@ export const request = async (option, data = null) => {
 
     // Log the successful response
     if (import.meta.env.VITE_ENVIRONMENT === 'dev') {
-      logger.info(transformResponseLog(response), 'Request Success');
+      logger.debug(transformResponseLog(response), 'Request Success');
     }
 
     return transformResponseLog(response);

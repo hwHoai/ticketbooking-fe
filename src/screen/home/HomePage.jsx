@@ -1,17 +1,16 @@
-import { t } from 'i18next';
-import { logger } from '../../util/logger';
-import { useAuth0 } from '@auth0/auth0-react';
+import Carousel from './components/Carousel';
+import SearchForm from '../../components/common/SearchForm';
+import HomeTicketSection from './components/HomeTicketSection';
+import Header from '../../components/layout/Header';
 
 export const HomePage = () => {
-  const { loginWithRedirect } = useAuth0();
-  const handleLogin = () => {
-    loginWithRedirect();
-  };
-  logger.info('NewFeedPage rendered', 'HomePage');
   return (
-    <div className='bg-primary-400 h-[30000px] w-full text-9xl'>
-      {t('example.hello_world')}
-      <button onClick={handleLogin}>login</button>
+    <div className='text-black-900 relative p-20'>
+      <Header />
+      <div id='banner' className='h-96 bg-gray-300'></div>
+      <SearchForm className={`absolute top-120 left-1/2 z-10 w-[86%] -translate-x-1/2 transform`} />
+      <Carousel />
+      <HomeTicketSection />
     </div>
   );
 };
