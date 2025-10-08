@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Header from '../../components/layout/Header';
 import { User, Shield, Bell, CreditCard, CalendarDays } from 'lucide-react';
@@ -7,9 +7,6 @@ import { ProfileTab } from './components/ProfileTab';
 import { SecurityTab } from './components/SecurityTab';
 import { NotificationTab } from './components/NotificationTab';
 import { CreateEventTab } from './components/CreateEventTab';
-import { UserAuthenticationService } from '../../service/user/user.authentication.service';
-import { Cookie } from '../../util/cookie.util';
-import { REFRESH_TOKEN_KEY } from '../../constant/common';
 
 export const AccountPage = () => {
   const { userName, userAvatar } = useSelector((state) => state.auth);
