@@ -1,329 +1,76 @@
-# React + Vite + Tailwind Starter Template
+# Tickking (Frontend) 🚀
 
-A comprehensive, production-ready React starter template with modern tooling and best practices. This template provides a solid foundation for building scalable React applications with essential features pre-configured.
+This is a personal side project built to translate frontend engineering theory into practice. It focuses on security-first design, performance optimization, and clean, maintainable code. The codebase demonstrates secure auth handling, a centralized API layer, and a modular structure designed for easy reviews and future feature expansion — making it practical for teams who value reliability, scalability, and clear engineering practices.
 
-## 🚀 Features
+## Outline 🗂️
 
-### Core Technologies
+- [Key Highlights](#key-highlights)
+- [Project Structure](#project-structure)
+- [Backend Repository](#backend-repository)
+- [Core Concepts](#core-concepts)
+- [Local Development](#local-development)
 
-- **React 19** - Latest React with modern features
-- **Vite** - Lightning-fast build tool and dev server
-- **Tailwind CSS 4** - Utility-first CSS framework
-- **React Router 7** - Client-side routing
-- **TypeScript Support** - Type-safe development (configured)
+## Key Highlights
 
-### Pre-configured Services & Utilities
+- **Modern Stack**: React, Vite, and Tailwind CSS.
+- **Predictable Architecture**: A clear separation between UI (`components`/`screen`), infrastructure (`config`), services (`service`), and utilities (`util`).
+- **Centralized API Layer**: A single `axios` instance and request wrapper (`src/util/request.js`) for consistent API interactions.
+- **Organized Routing**: Separate route definitions for public and private areas of the application (`src/route/PublicRoute.jsx`, `src/route/PrivateRoute.jsx`).
+- **Global State Management**: Redux is configured for managing application-wide state (`src/config/redux.store.config.js`).
+- **Internationalization**: i18n is set up for multi-language support (`src/config/i18n.js`).
 
-#### 🌐 HTTP Client & API Management
-
-- **Axios** - HTTP client with interceptors for services and error handling
-- **Service Architecture** - Organized API calls in service classes
-- **Token Management** - Automatic token refresh and validation
-- **Cookie Service** - Browser cookie management utilities
-- **Request Utility** - Utility function for enhanced API calls
-
-#### 🌍 Internationalization (i18n)
-
-- **React i18next** - Complete i18n solution for switching through several languages
-- **Multi-language Support** - English and Vietnamese pre-configured
-- **Dynamic Language Switching** - Runtime language changes
-- **Organized Translation Files** - JSON-based translation management
-
-#### 📝 Logging System
-
-- **Multiple Log Levels** - Error, Warn, Info, Debug, Trace
-- **Styled Console Output** - Color-coded logs with timestamps
-- **Environment-based Logging** - Different log levels for dev/prod
-
-#### 🎨 UI & Styling
-
-- **Custom Font Integration** - OpenSans font family included
-- **Tailwind PostCSS** - Latest Tailwind with PostCSS integration
-- **Responsive Design Ready** - Mobile-first approach
-- **CSS Variables** - Custom color scheme with CSS custom properties
-
-#### 🔐 Authentication & Security
-
-- **JWT Token Handling** - Access and refresh token management
-- **Token Expiration Check** - Automatic token validation
-- **Private/Public Routes** - Route protection based on authentication
-- **Secure Cookie Storage** - HTTPOnly cookie support
-
-#### 🛠 Development Tools
-
-- **ESLint** - Code linting with React-specific rules
-- **Prettier** - Code formatting with Tailwind plugin
-- **Husky** - Git hooks for code quality
-- **Hot Module Replacement** - Instant updates during development
-
-## 📁 Project Structure
+## Project Structure
 
 ```
-src/
-├── assets/                    # Static assets
-│   └── fonts/                # Font files (OpenSans variants)
-├── component/                # Reusable components
-│   └── common/               # Common components
-├── config/                   # Configuration files
-│   ├── axios.config.js       # Axios instance and interceptors
-│   ├── i18n.js              # Internationalization setup
-│   └── locale/              # Translation files
-│       ├── en.json          # English translations
-│       └── vi.json          # Vietnamese translations
-├── constant/                 # Application constants
-│   ├── error.code.js        # Error code definitions
-│   └── routePath.jsx        # Route path constants
-├── route/                   # Routing configuration
-│   ├── PrivateRoute.jsx    # Protected routes (Need authentication)
-│   └── PublicRoute.jsx     # Public routes
-├── screen/                  # Page components
-│   ├── auth/               # Authentication pages
-│   │   ├── LoginPage.jsx       # Login page
-│   │   └── RegisterPage.jsx    # Registration page
-│   └── home/               # Home page
-│       └── HomePage.jsx        # Main home page
-├── service/                # Business logic services
-│   ├── common/             # Common utilities
-│   │   ├── cookie.service.js    # Cookie management
-│   │   └── token.service.js     # JWT token utilities
-│   └── user/               # User-related services
-│       └── auth/           # Authentication services
-│           ├── user.authentication.service.js  # Auth service
-│           ├── user.login.service.js           # Login service
-│           └── user.register.service.js        # Register service
-├── util/                   # Utility functions
-│   ├── logger.js          # Browser logging utility
-│   └── request.js         # HTTP request utility
-├── App.jsx                # Main application component
-├── index.css              # Global styles and Tailwind imports
-└── main.jsx               # Application entry point
+src ── assets/       (fonts, images)
+    ├─ components/  (common/, layout/, provider/)
+    ├─ config/      (axios.config.js, i18n.js, oauth.config.js, redux.store.config.js, locale/)
+    ├─ constant/    (common.js, error.code.js, routePath.jsx, selectOptions.js, selectStyles.js)
+    ├─ context/
+    ├─ data/        (tickets.js)
+    ├─ hooks/       (draw_tools/)
+    ├─ lib/         (redux/)
+    ├─ route/       (PublicRoute.jsx, PrivateRoute.jsx)
+    ├─ screen/      (Auth-Callback.jsx, CommingSoon.jsx, NotFound.jsx, account/, create_event/, home/, ticket_detail/, ticket_list/)
+    ├─ service/     (user/)
+    └─ util/        (cookie.util.js, logger.js, request.js)
 ```
 
-## 🚀 Quick Start
+(Above tree is horizontal at the top level under `src` and shows key folders and notable files present in the repository.)
 
-### Prerequisites
+## Core Concepts
 
-- Node.js (v18 or higher)
-- npm, yarn, or pnpm
+### Routing
 
-### Installation
+The application uses a declarative routing pattern. Routes are defined as arrays of objects in `src/route/PublicRoute.jsx` and `src/route/PrivateRoute.jsx`. This makes it easy to see all available paths and manage access control. Route paths are managed in `src/constant/routePath.jsx` to prevent magic strings.
 
-1. **Clone or use this template**
+### API Service Layer
 
-   ```bash
-   git clone <repository-url>
-   cd react-vite-tailwind
-   ```
+All HTTP requests are managed through a central `axios` instance defined in `src/config/axios.config.js`. A wrapper function at `src/util/request.js` is used by all services to ensure that requests are consistent and that logging or error handling can be managed globally.
 
-2. **Install dependencies**
+### State Management
 
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+Global state, such as user authentication status, is handled by Redux. The store and its configuration can be found in `src/config/redux.store.config.js`.
 
-3. **Set up environment variables**
-   Create a `.env` file in the root directory:
+## Local Development
 
-   ```env
-   VITE_API_URL=http://localhost:3000/api
-   VITE_ENVIRONMENT=dev
-   ```
+1.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
+2.  **Environment Variables**:
+    Create a `.env` file in the root directory and add the necessary environment variables (e.g., `VITE_API_URL`).
+3.  **Run the development server**:
+    ```bash
+    npm run dev
+    ```
+4.  **Open the application**:
+    Navigate to `http://localhost:5173`.
 
-4. **Start development server**
+## Backend Repository
 
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+The backend implementation that this frontend consumes is available at:
 
-5. **Open your browser**
-   Navigate to `http://localhost:5173`
+https://github.com/hwHoai/ticketbooking-be
 
-## 📚 Usage Guide
-
-### HTTP Requests
-
-Use service classes for API calls. Create service classes that utilize the `request` utility function:
-
-```javascript
-// Example: service/user/auth/user.login.service.js
-import { request } from '../../../util/request';
-
-export class UserLoginService {
-  static async loginByEmailAndPassword({ email, password }) {
-    return await request(
-      {
-        method: 'POST',
-        url: '/auth/login'
-      },
-      {
-        email,
-        password
-      }
-    );
-  }
-}
-
-// Usage in components
-import { UserLoginService } from '../service/user/auth/login.service';
-
-const MyComponent = () => {
-  const handleLogin = async () => {
-    try {
-      const email = example@gmail.com;
-      const password = 123456;
-      const response = await UserLoginService.loginByEmailAndPassword({
-        email,
-        password
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error fetching user:', error);
-    }
-  };
-
-  return <button onClick={handleLogin}>Log in</button>;
-};
-```
-
-### Service Architecture
-
-Organize your API calls using service classes. Each service should handle related API endpoints using the `request` utility:
-
-```javascript
-// Example: PostService.js
-import { request } from '../util/request';
-
-export class PostService {
-  static async getAllPosts() {
-    return await request({
-      method: 'GET',
-      url: '/posts'
-    });
-  }
-
-  static async getPostById(id) {
-    return await request({
-      method: 'GET',
-      url: `/posts/${id}`
-    });
-  }
-
-  static async createPost(postData) {
-    return await request(
-      {
-        method: 'POST',
-        url: '/posts'
-      },
-      postData
-    );
-  }
-
-  static async updatePost(id, postData) {
-    return await request(
-      {
-        method: 'PUT',
-        url: `/posts/${id}`
-      },
-      postData
-    );
-  }
-
-  static async deletePost(id) {
-    return await request({
-      method: 'DELETE',
-      url: `/posts/${id}`
-    });
-  }
-}
-```
-
-### Internationalization
-
-Switch languages and use translations:
-
-```javascript
-import { useTranslation } from 'react-i18next';
-
-const MyComponent = () => {
-  const { t, i18n } = useTranslation();
-
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
-
-  return (
-    <div>
-      <h1>{t('welcome')}</h1>
-      <button onClick={() => changeLanguage('vi')}>Tiếng Việt</button>
-    </div>
-  );
-};
-```
-
-### Logging
-
-Use the logger utility throughout your application:
-
-```javascript
-import { logger } from './util/logger';
-
-// Different log levels
-logger.info('User logged in', 'Authentication');
-logger.error('API call failed', 'HTTP Request', error);
-logger.debug('Component rendered', 'React');
-```
-
-### Route Management
-
-Add new routes to the appropriate route files:
-
-```javascript
-// For public routes (PublicRoute.jsx)
-export const publicRoute = [
-  {
-    id: 'new-page',
-    path: '/new-page',
-    element: <NewPageComponent />,
-    index: false
-  }
-];
-```
-
-## 🔧 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-- `npm run prettier` - Format code with Prettier
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🛠 Built With
-
-- [React](https://reactjs.org/) - UI Library
-- [Vite](https://vitejs.dev/) - Build Tool
-- [Tailwind CSS](https://tailwindcss.com/) - CSS Framework
-- [Axios](https://axios-http.com/) - HTTP Client
-- [React Router](https://reactrouter.com/) - Routing
-- [React i18next](https://react.i18next.com/) - Internationalization
-
----
-
-**Happy coding! 🎉**
-
-_This template is designed to jumpstart your React projects with modern best practices and essential features pre-configured._
+The backend provides the REST APIs for authentication, ticket data, and booking flows used by this project.
