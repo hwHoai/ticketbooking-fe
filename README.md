@@ -1,7 +1,7 @@
 <div align="center">
-  <h1 align="center">Tickking Frontend 🚀</h1>
+  <h1 align="center">TicketBooking Frontend 🚀</h1>
   <p align="center">
-    A feature-rich, security-first frontend for a modern online ticketing platform.
+    The official frontend for the TicketBooking platform, a modern web application for browsing and purchasing event tickets. Built with React, Vite, and Redux Toolkit, it features a secure authentication system and a highly optimized, component-based architecture.
   </p>
 </div>
 
