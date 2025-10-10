@@ -1,9 +1,9 @@
-import { Routes, Route, BrowserRouter } from 'react-router';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { privateRoute } from './route/PrivateRoute';
 import { publicRoute } from './route/PublicRoute';
 import { logger } from './util/logger';
 import { Cookie } from './util/cookie.util';
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from './lib/redux/auth.slice';
 import { UserAuthenticationService } from './service/user/user.authentication.service';
@@ -55,7 +55,7 @@ const PrivateRoute = ({ children }) => {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!refreshToken) {
       UserAuthenticationService.login();
     }
@@ -72,12 +72,12 @@ export const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {publicRoute.map((route, i) => (
-          <Route key={i} {...route} />
+        {publicRoute.map((route) => (
+          <Route key={route.id} {...route} />
         ))}
-        {privateRoute.map((route, i) => {
+        {privateRoute.map((route) => {
           const { element, ...rest } = route;
-          return <Route key={i} {...rest} element={<PrivateRoute>{element}</PrivateRoute>} />;
+          return <Route key={route.id} {...rest} element={<PrivateRoute>{element}</PrivateRoute>} />;
         })}
         <Route path='*' element={<NotFound />} />
       </Routes>

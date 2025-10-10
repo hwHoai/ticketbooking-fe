@@ -8,7 +8,7 @@ import { SecurityTab } from './components/SecurityTab';
 import { NotificationTab } from './components/NotificationTab';
 import { CreateEventTab } from './components/CreateEventTab';
 
-export const AccountPage = () => {
+const AccountPage = () => {
   const { userName, userAvatar } = useSelector((state) => state.auth);
   const [activeTab, setActiveTab] = useState('profile');
 
@@ -92,3 +92,5 @@ export const AccountPage = () => {
     </div>
   );
 };
+
+export default AccountPage;
