@@ -4,12 +4,12 @@ const Carousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const carouselData = [
-    { id: 1, title: 'Summer Travel Deal', image: 'src/assets/home-page/1.png' },
-    { id: 2, title: 'Concert Series 2024', image: 'src/assets/home-page/2.png' },
-    { id: 3, title: 'Weekend Express', image: 'src/assets/home-page/3.png' },
-    { id: 4, title: 'Event Highlights', image: 'src/assets/home-page/4.png' },
-    { id: 5, title: 'Night Journey', image: 'src/assets/home-page/5.png' },
-    { id: 6, title: 'Family Package', image: 'src/assets/home-page/6.png' }
+    { id: 1, title: 'Summer Travel Deal', image: 'https://placehold.co/600x400' },
+    { id: 2, title: 'Concert Series 2024', image: 'https://placehold.co/600x400' },
+    { id: 3, title: 'Weekend Express', image: 'https://placehold.co/600x400' },
+    { id: 4, title: 'Event Highlights', image: 'https://placehold.co/600x400' },
+    { id: 5, title: 'Night Journey', image: 'https://placehold.co/600x400' },
+    { id: 6, title: 'Family Package', image: 'https://placehold.co/600x400' }
   ];
 
   useEffect(() => {
@@ -47,7 +47,15 @@ const Carousel = () => {
                 {carouselData.slice(slideIndex * 2, slideIndex * 2 + 2).map((item) => (
                   <div key={item.id} className='w-1/2 overflow-hidden rounded-lg bg-white'>
                     <div className='aspect-[16/9]'>
-                      <img src={item.image} alt={item.title} className='h-full w-full object-cover' />
+                      <img
+                        width={600}
+                        height={400}
+                        src={item.image}
+                        alt={item.title}
+                        referrerPolicy='no-referrer'
+                        className='h-full w-full object-cover'
+                        loading='lazy'
+                      />
                     </div>
                   </div>
                 ))}
