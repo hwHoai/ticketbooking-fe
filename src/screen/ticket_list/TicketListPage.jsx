@@ -2,9 +2,9 @@ import Header from '../../components/layout/Header';
 import TicketList from './components/TicketList';
 import SearchForm from '../../components/common/SearchForm';
 
-export const TicketListPage = () => {
+const TicketListPage = () => {
   return (
-    <div className='text-black-900 relative'>
+    <div className='relative text-black'>
       <Header />
       <div className='pt-70 pb-20'>
         <SearchForm />
@@ -13,3 +13,5 @@ export const TicketListPage = () => {
     </div>
   );
 };
+
+export default TicketListPage;

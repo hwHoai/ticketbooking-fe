@@ -1,9 +1,11 @@
+import { lazy } from 'react';
 import { NAVIGATE_ROUTES, TICKET_ROUTE } from '../constant/routePath';
-import CommingSoonPage from '../screen/CommingSoon';
-import { HomePage } from '../screen/home/HomePage';
-import { TicketListPage } from '../screen/ticket_list/TicketListPage';
-import { TicketDetailPage } from '../screen/ticket_detail/TicketDetailPage';
-import { AuthCallback } from '../screen/Auth-Callback';
+
+const CommingSoonPage = lazy(() => import('../screen/CommingSoon'));
+const HomePage = lazy(() => import('../screen/home/HomePage'));
+const TicketListPage = lazy(() => import('../screen/ticket_list/TicketListPage'));
+const TicketDetailPage = lazy(() => import('../screen/ticket_detail/TicketDetailPage'));
+const AuthCallback = lazy(() => import('../screen/Auth-Callback'));
 
 export const publicRoute = [
   {

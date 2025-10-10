@@ -9,7 +9,7 @@ import { ImageForm } from './components/forms/ImageForm';
 import { LocationAndMapForm } from './components/forms/LocationAndMapForm';
 import { FormProvider, useForm } from 'react-hook-form';
 
-export const CreateNewEventPage = () => {
+const CreateNewEventPage = () => {
   const navigate = useNavigate();
   const eventData = useSelector((state) => state.eventForm);
   const [activeTab, setActiveTab] = useState('basic');
@@ -343,3 +343,5 @@ export const CreateNewEventPage = () => {
     </div>
   );
 };
+
+export default CreateNewEventPage;

@@ -1,6 +1,8 @@
+import { lazy } from 'react';
 import { ACCOUNT, EVENT } from '../constant/routePath';
-import { AccountPage } from '../screen/account/AccountPage';
-import { CreateNewEventPage } from '../screen/create_event/CreateNewEventPage';
+
+const AccountPage = lazy(() => import('../screen/account/AccountPage'));
+const CreateNewEventPage = lazy(() => import('../screen/create_event/CreateNewEventPage'));
 
 export const privateRoute = [
   {

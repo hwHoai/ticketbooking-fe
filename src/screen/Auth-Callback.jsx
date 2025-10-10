@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../constant/common';
 import { UserAuthenticationService } from '../service/user/user.authentication.service';
 import { jwtDecode } from 'jwt-decode';
@@ -8,7 +8,7 @@ import { logger } from '../util/logger';
 import { useNavigate } from 'react-router';
 import { Cookie } from '../util/cookie.util';
 
-export const AuthCallback = () => {
+const AuthCallback = () => {
   const navigate = useNavigate();
   const url = new URL(window.location.href);
   const code = url.searchParams.get('code');
@@ -42,7 +42,7 @@ export const AuthCallback = () => {
     window.location.href = '/';
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isLogoutCallback) {
       handleLogout();
     }
@@ -51,3 +51,5 @@ export const AuthCallback = () => {
   }, []);
   return null;
 };
+
+export default AuthCallback;

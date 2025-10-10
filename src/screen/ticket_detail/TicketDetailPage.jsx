@@ -5,7 +5,7 @@ import Header from '../../components/layout/Header';
 import { ticketInfoContext } from '../../components/provider/ticketInfoProvider';
 //import RecommendedTicket from '../../components/common/RecommededTicket';
 
-export const TicketDetailPage = () => {
+const TicketDetailPage = () => {
   const { id: ticketId, ticketType } = useParams();
   if (!ticketType || !ticketId) return <div>Ticket not found</div>;
 
@@ -19,3 +19,5 @@ export const TicketDetailPage = () => {
     </div>
   );
 };
+
+export default TicketDetailPage;
